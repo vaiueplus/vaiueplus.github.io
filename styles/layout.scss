@@ -1,0 +1,39 @@
+body {
+    padding: 1em;
+    display: flex;
+
+    @media screen and (max-width: 768px) {
+        display: block;
+    }
+
+    aside {
+        display: inline-block;
+
+        .desktop-menu {
+            min-width: 14em;
+            padding: 1em;
+            display: inline-block;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            display: block;
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .desktop-menu {
+                display: none;
+            }
+        }
+    }   
+
+    main {
+        padding: 1em;
+        vertical-align:top; /* <---- this */
+    }
+}

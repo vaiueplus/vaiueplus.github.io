@@ -1,0 +1,134 @@
+.subject_component {
+    padding: 3rem 2rem;
+    
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 1em;
+    background: rgb(0,82,180);
+    background: linear-gradient(90deg, rgba(0,82,180,1) 0%, rgba(82,113,204,1) 35%, rgba(102,157,222,1) 100%);
+    border-radius: 1em;
+    width: 50em;
+
+    margin-bottom: 1em;
+  
+    img {
+        max-width: 6em;
+        min-width: 4em;
+    }
+
+    .component_content {
+        width: calc(100% - 5em);
+
+        h2 {
+            color: white;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            background-color: white;
+            border-radius: 1em;
+            padding: 0.5em 1.5em;
+            
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          
+            width: 70%;
+        }
+    }
+
+}
+
+.topic_component {
+    border-radius: 1em;
+
+    padding: 3rem 2rem;
+    background: rgb(0,82,180);
+    background: linear-gradient(90deg, rgba(0,82,180,1) 0%, rgba(20,115,230,1) 85%, rgba(67,149,242,1) 100%);
+    max-width: 20em;
+
+    display: inline-block;
+    margin: 1em 2em 1em 0em;
+
+    @media screen and (max-width: 768px) {
+        display: block;
+    }
+
+    h2 {
+        color: white;
+        margin-bottom: 0.5em;
+    }
+
+    p {
+        background-color: white;
+        border-radius: 1em;
+        padding: 0.5em 1.5em;
+        
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+.learng_item_component {
+    border-radius: 1em;
+    padding: 3rem 2rem;
+    max-width: 35em;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-size: auto;
+    object-fit: cover;
+    background-position: center;
+    h2 {
+        color: white;
+        margin-bottom: 0.5em;
+    }
+
+    p {
+        color: white;
+    }
+
+    section {
+        margin-top: 2em;
+        text-align: right;
+        .video_button {
+            gap: 0.5em;
+            width: 12em;
+        }
+    }
+}
+
+.item_component_section{
+    display: flex;
+    flex-wrap: wrap;  
+    gap: 1em;
+}    
+
+.learng_title_component {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 0.5em;
+    a {
+        width: 4em;
+        margin: -1.5em;
+        z-index: 1;
+    }
+    .component_parent {
+        min-width: 2em;
+    }
+    .topic_component {
+        margin: 0;
+    }
+
+    .component_langs {
+        button {
+            margin: 0.5em;
+        }
+
+        .is-focused  {
+            background-color: #29518b;
+        }
+    }
+}
