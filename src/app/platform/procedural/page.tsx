@@ -1,5 +1,5 @@
+import { GetSubjectComponent, SUBJECT_LAW_LEARNING } from "@/static_data";
 import {ShareSubjectComponent, ShareTopicComponent} from "./ShareComponents";
-import {PageDataJSON, GetSubjectComponent, SUBJECT_LAW_LEARNING} from '../../static_data';
 
 export default function DrawLawLearningPage() {
     const cards_dom_list = [];

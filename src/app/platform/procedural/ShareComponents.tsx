@@ -2,7 +2,6 @@ import { LearningResourceInterface, UITopicInterface } from "@/data_structure";
 import { LangCodeTable } from '@/static_data';
 import { Combine_Path } from "@/utility/dynamic_utility";
 import Link from "next/link";
-import { useEffect } from "react";
 
 // export function GetContentLanguage() : string {
 //     let id = "item_language";

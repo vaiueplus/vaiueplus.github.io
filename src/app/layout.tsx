@@ -1,5 +1,4 @@
 import '../../styles/globals.scss'
-import { VerticalSideBarDom, HorizontalSideBarDom } from './sidebar/SideDomElements'
 
 export default function RootLayout({
   children,
@@ -9,8 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <aside><VerticalSideBarDom></VerticalSideBarDom><HorizontalSideBarDom></HorizontalSideBarDom></aside>
-        <main>{children}</main>
+        {children}
       </body>
     </html>
   )
