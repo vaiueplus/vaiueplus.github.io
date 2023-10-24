@@ -32,3 +32,13 @@ export function get_cookie(cname : string, p_default: string = "") {
   export function Combine_Path(path: string) {
     return process.env.NEXT_PUBLIC_ROOT_PATH + path;
   }
+
+  export function Is_Email(email : string) {
+    let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+    let result = regex.test(email);
+
+    console.log(email);
+    console.log(result);
+
+    return result;
+  }

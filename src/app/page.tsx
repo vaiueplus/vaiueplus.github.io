@@ -5,7 +5,7 @@ import {RenderBenefitComponent} from './home_page_component/benefit_component';
 import { RenderStatsComponent } from './home_page_component/stats_component';
 import { RenderSubscriptionComponent } from './home_page_component/subscription_compoenent';
 import { RenderHomeFooter } from './home_page_component/footer_component';
-import { HandleHeaderCompClickEvent } from './home_page_component/home_page_client';
+import { ProcessOnPageLoadedEvent } from './home_page_component/home_page_client';
 
 export default function Home() {
 
@@ -18,7 +18,7 @@ export default function Home() {
       <RenderStatsComponent></RenderStatsComponent>
       <RenderSubscriptionComponent></RenderSubscriptionComponent>
       <RenderHomeFooter></RenderHomeFooter>
-      <HandleHeaderCompClickEvent></HandleHeaderCompClickEvent>
+      <ProcessOnPageLoadedEvent></ProcessOnPageLoadedEvent>
     </div>
   )
 }
