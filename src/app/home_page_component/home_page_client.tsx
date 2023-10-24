@@ -7,7 +7,7 @@ const OnNotionEmailSubscription = async function () {
 	let input_value = inputElement?.value;
 
 	if (input_value != null && Is_Email(input_value)) {
-		console.log(input_value);
+		if (inputElement != null) inputElement.value = "";
 
 		await fetch("https://yuri-api.sytes.net/vaiue/email_subscription", {
 			method: "POST",
@@ -27,8 +27,6 @@ const OnNotionEmailSubscription = async function () {
 		});
 	}
 
-	// if (inputElement != null)
-	// 	inputElement.value = "";
 }
 
 export const ProcessOnPageLoadedEvent = function() {
