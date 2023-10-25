@@ -9,15 +9,15 @@ export const RenderMainComponent  = async () => {
             <br></br>
             <div className="column home_page_main_left">
                 <div className="news_feed">
-                    <span>News</span>
+                    <span>最新消息</span>
                     Stay connected to the upcoming & Recent jobs
                 </div>
 
-                <h1>Accelerate your working with AI</h1>
-                <p className="block">We are here to help you take care of your legality with the best service especially for you</p>
-                <Link className="home_page_main_start block" href="#">GET STARTED</Link>
+                <h1>用AI加速你的法律工作流程</h1>
+                <p className="block">讓All-in-one平台提供最新且最正確的AI工具&資訊, 讓您在工作流程上更加快速且高效率, 在法律學習&工作流程上更加得心應手</p>
+                <Link className="home_page_main_start block" href="#">開始試用</Link>
                 <br></br>
-                <Link className="home_page_main_subscribe block" href="#">SUBSCRIBE</Link>
+                <Link className="home_page_main_subscribe block" href="#">訂閱最新消息</Link>
             </div>
         </div>
         </div>

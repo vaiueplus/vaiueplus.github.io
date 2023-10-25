@@ -36,31 +36,31 @@ export const PageDataJSON : UICategoryInterface = {
         topics: [
             {
                 id: PageIDTable.Law_Learning_Topic,
-                path: "/procedural/topic",
+                path: "/platform/procedural/topic",
                 title : "Topic",
                 description : "What is your topic about law?"
             } , 
             {
                 id: PageIDTable.Law_Learning_Collection,
-                path: "/procedural/data_collection",
+                path: "/platform/procedural/data_collection",
                 title : "Collection",
                 description : "What is your topic about law?"
             },
             {
                 id: PageIDTable.Law_Learning_Process,
-                path: "/procedural/process",
+                path: "/platform/procedural/process",
                 title : "Process",
                 description : "What is your topic about law?"
             },
             {
                 id: PageIDTable.Law_Learning_Presentation,
-                path: "/proc_edural/presentation",
+                path: "/platform/proc_edural/presentation",
                 title : "Presentation",
                 description : "What is your topic about law?"
             },
             {
                 id: PageIDTable.Law_Learning_Conclusion,
-                path: "/procedural/conclusion",
+                path: "/platform/procedural/conclusion",
                 title : "Conclusion",
                 description : "What is your topic about law?"
             },

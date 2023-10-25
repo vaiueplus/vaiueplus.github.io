@@ -43,10 +43,14 @@
         border-radius: 1em;
         padding: 0.5em 1em;
         background-color: v.$color_shallow_blue;
-        width: max-content;
+        width: 25em;
         font-size: 1em;
         display:inline-block;
 
+        overflow:hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
         span {
             background-color: v.$color_dark_blue;
             color: v.$color_white;
@@ -54,6 +58,11 @@
             padding: 0.25em 1em;
             margin-right: 0.5em;
         }
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+
     }
 
     h1 {

@@ -8,9 +8,9 @@ export const RenderSubscriptionComponent  = () => {
             <div className="columns">
 
                 <div className="column is-three-quarters">
-                    <h1>All-in-one, Join with AI!</h1>
-                    <p>Request for a personalized budget for your legal problem.
-                     We will send you a coupe options in 24 hours. You can have free consult , if a our first customer</p>
+                    <h1>All-in-one, 開始AI加速 !</h1>
+                    <p>想要了解更多最新且最正確的AI工具與資訊,</p>
+                    <p>請訂閱追隨VAIUE!</p>
 
                     <br></br>
                     <div className="input_field">

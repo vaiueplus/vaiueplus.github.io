@@ -5,25 +5,25 @@ export const RenderStatsComponent  = () => {
     return (
         <section className="home_page_stats">
         <div className="container">
-            <h2>We have ...</h2>
-            <p>Our all-in-one platform could help your working for ...</p>
+            <h2>VAIUE擁有</h2>
+            <p>透過All-in-one平台可以...</p>
             <br></br><br></br>
 
             <div className="columns">
 
                 <div className="column">
                     <h2>30+</h2>
-                    <p>AI Tools</p>
+                    <p>AI工具</p>
                 </div>
 
                 <div className="column">
-                    <h2>60% Up</h2>
-                    <p>Save working time</p>
+                    <h2>60% ↑</h2>
+                    <p>節省時間</p>
                 </div>
 
                 <div className="column">
                     <h2>10+</h2>
-                    <p>Collaborated cloud tools</p>
+                    <p>協作雲端工具</p>
                 </div>
             </div>
         </div>

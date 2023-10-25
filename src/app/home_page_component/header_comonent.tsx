@@ -22,25 +22,25 @@ export const RenderHeaderComponent  = async () => {
 
             <div className="navbar-end quick_link_group">
               <a className="navbar-item">
-                News
+                最新消息
               </a>
 
               <a className="navbar-item">
-                Product
+                產品介紹
               </a>
 
               <a className="navbar-item">
-                Pricing
+                方案計算
               </a>
 
               <a className="navbar-item">
-                About us
+                關於我們
               </a>
             </div>
 
             <div className="navbar-item">
               <Link href="/platform/" className="button">
-                GET STARTED
+                開始使用
               </Link>
             </div>
           </div>
