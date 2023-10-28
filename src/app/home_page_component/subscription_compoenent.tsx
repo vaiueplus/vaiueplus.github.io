@@ -5,9 +5,9 @@ export const RenderSubscriptionComponent  = () => {
     return (
         <section className="home_page_subscription">
         <div className="container">
-            <div className="columns">
+            <div className="columns is-vcentered">
 
-                <div className="column is-three-quarters">
+                <div className="column is-two-thirds">
                     <h1>All-in-one, 開始AI加速 !</h1>
                     <p>想要了解更多最新且最正確的AI工具與資訊,</p>
                     <p>請訂閱追隨VAIUE!</p>

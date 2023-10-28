@@ -6,13 +6,15 @@ export const RenderBenefitComponent  = () => {
         <section className="home_page_benefit">
         <div className="container">
 
-            <div className="columns home_page_benefit_left">
-                <div className="column">
-                <h2>AI如何在法律工作流程上對您有所幫助?</h2>
-                    <p>幫忙節省時間找到最新且最正確的AI工具&資訊</p>
-                    <p>快速了解&學習AI如何強化工作流程</p>
-                    <p>All-in-one平台上獲得所需AI資訊與快速切換所需AI工具</p>
-                    <p>統一管理所有AI工具與雲端協作工具</p>
+            <div className="columns home_page_benefit_left is-vcentered">
+                <div className="column ">
+                <h2>AI如何在<span className="is-underlined">法律</span>工作流程上對您有所幫助?</h2>
+                    <section>
+                        <p>幫忙節省時間找到最新且最正確的AI工具&資訊</p>
+                        <p>快速了解&學習AI如何強化工作流程</p>
+                        <p>All-in-one平台上獲得所需AI資訊與快速切換所需AI工具</p>
+                        <p>統一管理所有AI工具與雲端協作工具</p>
+                    </section>
                 </div>
 
                 <div className="column home_page_benefit_right">

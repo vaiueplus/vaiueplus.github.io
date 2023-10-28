@@ -1,11 +1,17 @@
 @use './variable' as v;
 
 #home_page {
-    background-color: v.$color_white_dark;
+    background-color: v.$color_white;
+
+    .container {
+        @media screen and (max-width: 1024px) {
+            padding: 0em 1.5em;
+        }
+    }
 }
 
 .homepage_header {
-    background-color: v.$color_white_dark;
+    background-color: v.$color_white;
     .navbar-brand {
         .navbar-item {
             img {
@@ -17,9 +23,14 @@
         }
     }
 
+    .navbar-item {
+        &:hover{
+            background-color: transparent;
+        }
+    }
+
     .button {
         @include v.universal_button;
-        background-color: v.$color_light_blue;
     }
 
     @media screen and (min-width: 1024px) {
@@ -32,6 +43,13 @@
 .home_page_main {
     height: 92vh;
     min-height:45em;
+
+    background-repeat: no-repeat;
+    background-position: right;
+
+    @media screen and (max-width: 1024px) {
+        background-size: 0%;
+    }
   
     .home_page_main_left {
         @media screen and (min-width: 1024px) {
@@ -74,8 +92,6 @@
     .home_page_main_start {
         @include v.universal_button;
         background-color: v.$color_light_blue;
-        padding-bottom: 1.5em;
-        padding-top: 1.5em;
         display:inline-block;
     }
 
@@ -124,13 +140,13 @@
             height: 12em;
         }
     }
-
+    h1 {  font-weight: 700; font-size: 2.5em; }
     h2 {  font-weight: 600; font-size: 1.6em; margin: 0.5em 0;}
     hr {width: 10em; margin: auto; background-color: v.$color_shallow_blue; }
 }
 
 .home_page_benefit {
-    padding: 5em 0em;
+    padding: 6em 0em;
 
     .home_page_benefit_left {
         h2 {
@@ -141,6 +157,10 @@
             color: v.$color_grey;
             margin: 0.8em 0em;
         }
+
+        section {
+            padding: 2em 0em;
+        }
     }
 
     .home_page_benefit_right {
@@ -149,7 +169,10 @@
         grid-template-columns: 200px;
         grid-template-columns: 15em 15em;
         grid-gap: 20px;
-
+        
+        justify-content:center;
+        justify-items: center;
+      
         @media screen and (max-width: 768px) {
             display: block;
         }
@@ -186,7 +209,7 @@
 
 .home_page_subscription {
     background-color: v.$color_white;
-    padding: 1em 0em;
+    padding: 2em 0em;
 
     h1 {
         font-weight: 600; font-size: 3em;
@@ -202,7 +225,9 @@
         button {       
             @include v.universal_button;
             display: inline-flex;
-            justify-content: center; /* center the content horizontally */
+            justify-content: space-around; /* center the content horizontally */
+            justify-items: center;
+            gap: 10px;
             align-items: center; /* center the content vertically */     
        }
    

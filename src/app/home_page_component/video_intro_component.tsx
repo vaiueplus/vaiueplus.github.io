@@ -12,7 +12,7 @@ export const RenderVideoIntroComponent  = () => {
                 </div>
 
                 <div className="column">
-                    <h2>平台使用</h2>
+                    <h1>VAIUE</h1>
                     <p>All-in-one 快速幫助你的工作流程</p>
 
                     <br></br>
