@@ -1,4 +1,4 @@
-import FieldSelectionPage from './procedural/topic/page'
+import HotTopicPage from './hottopic/page'
 
 export default function Home() {
 
@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <div>
-      <FieldSelectionPage></FieldSelectionPage>
+      <HotTopicPage></HotTopicPage>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { Combine_Path } from "@/utility/dynamic_utility";
 export const RenderSubscriptionComponent  = () => {
 
     return (
-        <section className="home_page_subscription">
+        <section className="home_page_subscription" id="home_page_subscription">
         <div className="container">
             <div className="columns is-vcentered">
 
@@ -17,6 +17,7 @@ export const RenderSubscriptionComponent  = () => {
                         <button><img src={Combine_Path("texture/icon/mail.png")}></img>Subscription</button>
                         <input placeholder="Email address"></input>
                     </div>
+                    <p className="email_indication"></p>
                 </div>
 
                 <div className="column">

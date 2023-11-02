@@ -1,0 +1,25 @@
+@use '/styles/variable' as v;
+
+.post-board {
+    width: 40em;
+    background-color: v.$color_white_dark;
+    padding: 2em;
+    border-radius: 1em;
+
+    .news_feed {
+        border-radius: 1em;
+        padding: 0.5em 1em;
+        background-color: v.$color_shallow_blue;
+        width: 25em;
+        font-size: 1em;
+        display:inline-block;
+
+        overflow:hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+    }
+}

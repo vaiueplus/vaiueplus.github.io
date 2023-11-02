@@ -6,6 +6,7 @@ export const VerticalSideBarDom  = () => {
   return <div className='menu desktop-menu'>
 
 	<ul className='menu-list'>
+		<SidebarDesktopLink name="Hot topic" url="/platform/hottopic"></SidebarDesktopLink>
 		<SidebarDesktopLink name="Procedural" url="/platform/procedural"></SidebarDesktopLink>
 	</ul>
 
@@ -62,6 +63,7 @@ export const VerticalSideBarDom  = () => {
 		<div className="navbar-menu">
 			<div className="navbar-start">
 				<div className="navbar-item has-dropdown is-hoverable">
+					<SidebarMobileLink name="Hot topic" url="/platform/hottopic" classname='navbar-link'></SidebarMobileLink>
 					<SidebarMobileLink name="Procedural" url="/platform/procedural/topic" classname='navbar-link'></SidebarMobileLink>
 
 					<div className="navbar-dropdown">

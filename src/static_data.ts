@@ -28,7 +28,7 @@ export const PageDataJSON : UICategoryInterface = {
     SUBJECT_LAW_LEARNING : {
 
         id: PageIDTable.Law_Learning,
-        path: "/procedural",
+        path: "/platform/procedural",
         title: "Law Learning",
         thumbnail: Combine_Path("texture/icon/law_learning.jpg"),
         description: "For law user to study accelerated",

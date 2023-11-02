@@ -42,3 +42,20 @@ export function get_cookie(cname : string, p_default: string = "") {
 
     return result;
   }
+
+  export function DoDelayAction(time : number, callback: () => void) : Promise<void> {
+    return new Promise(function (resolve, reject) {
+        let flag = false;
+        (
+            function waitForFoo(){
+                if (flag) {
+
+                  if (callback != null) callback();
+                  return resolve();
+                }
+
+                flag = true;
+                setTimeout(waitForFoo, time);
+        })();
+    });
+}

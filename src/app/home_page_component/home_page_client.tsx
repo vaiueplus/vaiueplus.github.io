@@ -1,13 +1,22 @@
 'use client';
-import { Is_Email } from '@/utility/dynamic_utility';
+import { Is_Email, DoDelayAction } from '@/utility/dynamic_utility';
 import {useState, useEffect} from 'react';
 
 const OnNotionEmailSubscription = async function () {
 	let inputElement = document.querySelector<HTMLInputElement>(".home_page_subscription input");
+	let indicationElement = document.querySelector<HTMLParagraphElement>(".home_page_subscription .email_indication");
+
 	let input_value = inputElement?.value;
 
-	if (input_value != null && Is_Email(input_value)) {
+	DoDelayAction(3000, () => {
+		if (indicationElement != null) indicationElement.innerHTML = "";
+	});
+
+	if (input_value != null && Is_Email(input_value) && indicationElement != null) {
 		if (inputElement != null) inputElement.value = "";
+		indicationElement.style.display = "block";
+		indicationElement.style.color = "green";
+		indicationElement.innerHTML = "傳送完成"
 
 		await fetch("https://yuri-api.sytes.net/vaiue/email_subscription", {
 			method: "POST",
@@ -25,8 +34,14 @@ const OnNotionEmailSubscription = async function () {
 		}).then((x) => {
 			console.log(x);
 		});
+		
+		return;
 	}
 
+	if (indicationElement != null) {
+		indicationElement.innerHTML = "Email 規格錯誤"
+		indicationElement.style.color = "red";
+	}
 }
 
 export const ProcessOnPageLoadedEvent = function() {
