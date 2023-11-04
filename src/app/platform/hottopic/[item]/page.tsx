@@ -11,8 +11,7 @@ import { withHistory } from 'slate-history'
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
-export default function RenderHotTopicItemPage() {
-    const params = useParams();
+export default function RenderHotTopicItemPage({ params }: { params: { item: string } }) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const router = useRouter();
 
@@ -21,7 +20,7 @@ export default function RenderHotTopicItemPage() {
     let hotTopicItem : any[] = [];
     
     useEffect(() => {
-      let url = FormatString(API.GetHotTopicItem, [params["item"]]);
+      let url = FormatString(API.GetHotTopicItem, [params.item]);
           url = Combine_API(url);
 
       console.log(url);
@@ -47,6 +46,12 @@ export default function RenderHotTopicItemPage() {
     )
 }
 
+export async function generateStaticParams() {
+  const posts = await fetch(Combine_API(API.GetHotTopicList)).then((res) => res.json())
+  return posts["result"].map((x: any) => ({
+    item: x["database_id"],
+  }))
+}
 
 const Element = (props : any)=> {
   const { attributes, children, element } = props
