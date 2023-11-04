@@ -43,12 +43,18 @@ export function ShareTopicComponent({topic_interface, is_link} : {topic_interfac
 export function LearningItemComponent({topic_interface} : {topic_interface: LearningResourceInterface}) {
     return (
         <div className="learng_item_component" style={{backgroundImage: `url(${topic_interface.thumbnail})`}}>
+
+                <Link href={topic_interface.path}>
+
                 <h2 className="title is-3">{topic_interface.title}</h2>
                 <p>{topic_interface.description}</p>
 
+                </Link>
+                
                 <section>
                     <Link href="" className="video_button button is-primary is-rounded"><img src= {Combine_Path("texture/other/video_player.svg")} ></img><span>Learning Video</span></Link>
                 </section>
+
         </div>
     );
 }

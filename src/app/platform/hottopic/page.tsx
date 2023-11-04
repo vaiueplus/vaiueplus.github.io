@@ -1,30 +1,36 @@
 'use client'
+
 import './hottopic.scss';
-import React, { useMemo } from 'react'
-import { createEditor, Descendant } from 'slate'
-import { Slate, Editable, withReact } from 'slate-react'
-import { withHistory } from 'slate-history'
+import {Combine_API, FormatString} from '@/utility/dynamic_utility';
+import {API} from '@/api_data';
+import React, {  useEffect, useState } from 'react'
+import {Hottopic_List} from '@/data_structure';
+import Link from 'next/link';
 
-export default function RenderHotTopicPage() {
-    const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+export default function RenderHotTopicItemPage() {
+    const [hotTopicList, setHotTopics] = useState<Hottopic_List[]>([]);
 
-    const is_readonly = true;
+    useEffect(() => {
+      let url = Combine_API(API.GetHotTopicList);
+      console.log(url);
+      fetch(url)
+      .then(r => r.json())
+      .then(data => setHotTopics(data.result));
+    },[]);
 
     return (
-        <div className="post-board">
-        <h2 className="news_feed">Title: Stay connected to the upcoming & Recent jobs</h2>
-        <Slate editor={editor} initialValue={initialValue}>
-            <Editable readOnly={is_readonly} placeholder="Enter some plain text..." />
-        </Slate>
-        </div>
+	<div>
+	{
+		hotTopicList.map(hottopic => {
+
+			return (
+			<div className="post-board" key={hottopic.database_id}>
+				<Link href={"/platform/hottopic/"+hottopic.database_id} className="is-size-6 has-text-weight-semibold">Title: {hottopic.title}</Link>
+				<p>Comments: {hottopic.comment_length}</p>
+			</div>
+			);
+		})
+	}
+	</div>
     )
 }
-
-const initialValue: any[] = [
-    {
-      type: 'paragraph',
-      children: [
-        { text: 'This is editable plain text, just like a <textarea>!' },
-      ],
-    },
-  ]

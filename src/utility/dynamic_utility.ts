@@ -33,6 +33,10 @@ export function get_cookie(cname : string, p_default: string = "") {
     return process.env.NEXT_PUBLIC_ROOT_PATH + path;
   }
 
+  export function Combine_API(path: string) {
+    return process.env.NEXT_PUBLIC_API + path;
+  }
+
   export function Is_Email(email : string) {
     let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
     let result = regex.test(email);
@@ -58,4 +62,11 @@ export function get_cookie(cname : string, p_default: string = "") {
                 setTimeout(waitForFoo, time);
         })();
     });
+}
+
+
+export function FormatString(string: string, params: any[]) {
+  return string.replace(/{(\d+)}/g, (match, index) => {
+    return typeof params[index] !== 'undefined' ? params[index] : match;
+  });
 }
