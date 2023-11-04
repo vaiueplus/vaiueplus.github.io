@@ -11,7 +11,16 @@ import { withHistory } from 'slate-history'
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
-export default function RenderHotTopicItemPage({ params }: { params: { item: string } }) {
+export async function generateStaticParams() {
+  const posts = await fetch(Combine_API(API.GetHotTopicList)).then((res) => res.json())
+  console.log(posts);
+
+  return posts["result"].map((x: any) => ({
+    item: x["database_id"],
+  }))
+}
+
+export default function Page({ params }: { params: { item: string } }) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const router = useRouter();
 
@@ -46,13 +55,6 @@ export default function RenderHotTopicItemPage({ params }: { params: { item: str
     )
 }
 
-export async function generateStaticParams() {
-  const posts = await fetch(Combine_API(API.GetHotTopicList)).then((res) => res.json())
-  return posts["result"].map((x: any) => ({
-    item: x["database_id"],
-  }))
-}
-
 const Element = (props : any)=> {
   const { attributes, children, element } = props
 
@@ -65,8 +67,6 @@ const Element = (props : any)=> {
 }
 
 const Image = ({ attributes, children, element } : any) => {
-
-  console.log(element);
 
   return (
     <div {...attributes}>
@@ -120,7 +120,5 @@ function ParseItemsToSlates(item: Hottopic_Item) {
     }
   }
   
-  console.log(slate_blocks);
-
   return slate_blocks;
 }
