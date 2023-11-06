@@ -13,6 +13,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "bulma": "^0.9.4",
+    "immutable": "^5.0.0-beta.4",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -20,7 +21,8 @@
     "slate-history": "^0.100.0",
     "slate-react": "^0.100.1",
     "styled-components": "^6.0.8",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "sass": "^1.67.0"

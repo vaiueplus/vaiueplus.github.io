@@ -1,4 +1,5 @@
 import '../../../styles/globals.scss'
+import { NoteFloatingBar } from './note/note_floating_bar'
 import { VerticalSideBarDom, HorizontalSideBarDom } from './sidebar/SideDomElements'
 
 export default function RootLayout({
@@ -9,7 +10,10 @@ export default function RootLayout({
   return (
     <div id="platform">
         <aside><VerticalSideBarDom></VerticalSideBarDom><HorizontalSideBarDom></HorizontalSideBarDom></aside>
-        <main>{children}</main>
+        <main>
+          <NoteFloatingBar></NoteFloatingBar>
+          {children}
+          </main>
     </div>
   )
 }
