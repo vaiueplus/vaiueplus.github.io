@@ -1,5 +1,46 @@
 @use '/styles/variable' as v;
 
+.post-board-brief-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    margin-bottom: 1em;
+    background-color: v.$color_white_dark;
+    padding: 1em 2em;
+    border-radius: 1em;
+    height: auto;
+
+    .news_feed {
+        border-radius: 1em;
+        padding: 0.5em 1em;
+        background-color: v.$color_white_blue;
+        
+        width: 100%;
+        max-width: 30em;
+        font-size: 1em;
+
+        overflow:hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .side-action-bar {
+        display: flex;
+        gap: 1em;
+
+        .side-action-item {
+            img {width: 32px;}
+            display: flex;
+            align-items: center;
+            justify-content: left;    
+            gap: 0.5em;
+        }
+
+    }
+
+}
+
 .post-board {
     margin-bottom: 1em;
     max-width: 40em;

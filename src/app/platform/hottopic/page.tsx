@@ -1,22 +1,20 @@
-'use client'
-
 import './hottopic.scss';
-import {Combine_API, FormatString} from '@/utility/dynamic_utility';
+import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
 import {API} from '@/api_data';
-import React, {  useEffect, useState } from 'react'
+import React from 'react'
 import {Hottopic_List} from '@/data_structure';
 import Link from 'next/link';
 
-export default function RenderHotTopicItemPage() {
-    const [hotTopicList, setHotTopics] = useState<Hottopic_List[]>([]);
+export default async function RenderHotTopicItemPage() {
 
-    useEffect(() => {
-      let url = Combine_API(API.GetHotTopicList);
-      console.log(url);
-      fetch(url)
-      .then(r => r.json())
-      .then(data => setHotTopics(data.result));
-    },[]);
+	let hotTopicList : Hottopic_List[] = [];
+	let url = Combine_API(API.GetHotTopicList);
+
+	console.log(url);
+
+	await fetch(url)
+	.then(r => r.json())
+	.then(data => hotTopicList = (data.result));
 
     return (
 	<div>
@@ -24,9 +22,23 @@ export default function RenderHotTopicItemPage() {
 		hotTopicList.map(hottopic => {
 
 			return (
-			<div className="post-board" key={hottopic.database_id}>
-				<Link href={"/platform/hottopic/"+hottopic.database_id} className="is-size-6 has-text-weight-semibold">Title: {hottopic.title}</Link>
-				<p>Comments: {hottopic.comment_length}</p>
+			<div className="post-board-brief-card" key={hottopic.database_id}>
+				<Link href={"/platform/hottopic/"+hottopic.database_id} className="is-size-6 has-text-weight-semibold news_feed">{hottopic.title}</Link>
+				
+				
+				<section className="side-action-bar">
+
+					<div className="side-action-item">
+						<img src= {Combine_Path("texture/platform/reply.png")} ></img>
+						{hottopic.comment_length} Replies
+					</div>
+
+					<div className="side-action-item">
+						<img src= {Combine_Path("texture/platform/share.png")} ></img>
+						Share
+					</div>
+
+				</section>
 			</div>
 			);
 		})
