@@ -54,7 +54,7 @@ export const PageDataJSON : UICategoryInterface = {
             },
             {
                 id: PageIDTable.Law_Learning_Presentation,
-                path: "/platform/proc_edural/presentation",
+                path: "/platform/procedural/presentation",
                 title : "Presentation",
                 description : "What is your topic about law?"
             },

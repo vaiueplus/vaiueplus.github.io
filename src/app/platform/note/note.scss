@@ -1,6 +1,36 @@
 @use '/styles/variable' as v;
 
 .note-floating-bar {
-    background-color: v.$color_light_blue;
-    color: white;
+
+    margin-bottom: 2em;
+
+    .container {
+        background-color: v.$color_light_blue;
+        color: white;
+        padding: 0.8em 2em;
+        border-radius: 1em;
+        margin: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        gap:2em;
+        
+        .note-create-btn {
+            width: 76px;
+        }
+        .note-create-btn:hover {
+            cursor:pointer;
+        }
+
+        .note-item {
+
+        }
+    
+    }
+
+    @media screen and (max-width: 768px) {
+        display: none;
+        margin-bottom: 0em;
+    }
 }
