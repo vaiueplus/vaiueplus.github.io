@@ -1,5 +1,10 @@
 @use '/styles/variable' as v;
 
+.hottopics-container {
+    margin: 0;
+
+}
+
 .post-board-brief-card {
     display: flex;
     flex-direction: column;
@@ -68,5 +73,16 @@
 
     .back-btn {
         margin-bottom: 1em;
+    }
+
+    .post-board-comment {
+        img {width: 64px;}
+
+        margin: 1em 0em;
+        
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        gap:1em;
     }
 }

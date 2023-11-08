@@ -37,6 +37,7 @@ export interface Hottopic_List {
 
 export interface Hottopic_Item {
     blocks: Hottopic_Block[],
+    comments: Comment_Block[],
 }
 
 export interface Hottopic_Block {
@@ -45,5 +46,11 @@ export interface Hottopic_Block {
     color?: string,
     bold?: boolean,
     italic?: boolean,
+}
+
+export interface Comment_Block {
+    id : string,
+    value: string,
+    owner_name: string,
 }
 //#endregion

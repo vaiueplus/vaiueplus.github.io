@@ -1,19 +1,23 @@
 'use client'
 
 import './hottopic.scss';
-import {Combine_API, FormatString} from '@/utility/dynamic_utility';
+import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
 import {API} from '@/api_data';
 import React, { useMemo, useEffect, useState } from 'react'
-import {Hottopic_Item} from '@/data_structure';
+import {Comment_Block, Hottopic_Block, Hottopic_Item, Hottopic_List} from '@/data_structure';
 import { createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { useRouter } from 'next/navigation';
 
+
+
 export function RenderSlateEditor({item_id} : {item_id: string}) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const router = useRouter();
     let hotTopicItem : any[] = [];
+    const [comments, setComments] = useState<Comment_Block[]>([]);
+
     const is_readonly = true;
 
     useEffect(() => {
@@ -25,8 +29,12 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
       fetch(url)
       .then(r => r.json())
       .then(data => {
-        hotTopicItem = (ParseItemsToSlates(data.result));        
+
+        let hot_topics : Hottopic_Item = data.result;
+        hotTopicItem = (ParseItemsToSlates(hot_topics.blocks));        
         editor.insertNodes(hotTopicItem);
+
+        setComments(hot_topics.comments);
       });
     },[]);
 
@@ -34,9 +42,23 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
     return (
       <div className="post-board">
         <button className='button back-btn' onClick={() => router.back()}>Back</button> 
+
          <Slate editor={editor} initialValue={hotTopicItem}>
            <Editable readOnly={is_readonly} renderElement={props => <Element {...props} />} placeholder="Enter some plain text..." />
-         </Slate> 
+         </Slate>
+
+        {
+          
+         comments.map(x=> {
+          return (
+            <div className='post-board-comment' key={x.id}>
+              <img src= {Combine_Path("texture/platform/avatar_default.png")} ></img>
+              <p>{x.value}</p>
+            </div> 
+          )
+         })
+        }
+
       </div>
     )
 }
@@ -70,8 +92,8 @@ const Image = ({ attributes, children, element } : any) => {
 }
 
 
-function ParseItemsToSlates(item: Hottopic_Item) {
-  if (item.blocks == null || item.blocks.length <= 0) {
+function ParseItemsToSlates(blocks: Hottopic_Block[]) {
+  if (blocks == null || blocks.length <= 0) {
     return [
       {
         type: 'paragraph',
@@ -81,10 +103,10 @@ function ParseItemsToSlates(item: Hottopic_Item) {
       }];
   }
   let slate_blocks : any[] = [];
-  let block_length = item.blocks.length;
+  let block_length = blocks.length;
 
   for (let i = 0; i < block_length; i++) {
-    let block = item.blocks[i];
+    let block = blocks[i];
 
     if (block.type == "paragraph") {
       slate_blocks.push(

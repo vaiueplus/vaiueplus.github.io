@@ -17,7 +17,7 @@ export default async function RenderHotTopicItemPage() {
 	.then(data => hotTopicList = (data.result));
 
     return (
-	<div>
+	<div className="hottopics-container container">
 	{
 		hotTopicList.map(hottopic => {
 
