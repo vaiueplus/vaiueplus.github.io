@@ -64,6 +64,10 @@
             font-weight: 600;
             padding: 0.5em 1em;
             letter-spacing: 1px;
+            overflow:hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+    
         }
 
         .slate-editor-tag  {
