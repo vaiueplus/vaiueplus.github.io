@@ -4,7 +4,7 @@ import './hottopic.scss';
 import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
 import {API} from '@/api_data';
 import React, { useMemo, useEffect, useState } from 'react'
-import {Comment_Block, Hottopic_Block, Hottopic_Item, Hottopic_List} from '@/data_structure';
+import {Comment_Block, Hottopic_Block, Hottopic_IntroCard, Hottopic_Item} from '@/data_structure';
 import { createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
@@ -16,6 +16,8 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const router = useRouter();
     let hotTopicItem : any[] = [];
+
+    const [introCard, setIntroCard] = useState<Hottopic_IntroCard>({saved_length: 0, comment_length: 0});
     const [comments, setComments] = useState<Comment_Block[]>([]);
 
     const is_readonly = true;
@@ -35,20 +37,28 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
         editor.insertNodes(hotTopicItem);
 
         setComments(hot_topics.comments);
+        setIntroCard(hot_topics.intro)
       });
     },[]);
 
 
     return (
       <div className="post-board">
-        <button className='button back-btn' onClick={() => router.back()}>Back</button> 
 
-         <Slate editor={editor} initialValue={hotTopicItem}>
+        <div className='slate-editor-header'>
+          <button className='button back-btn' onClick={() => router.back()}>Back</button>         
+          <p className='slate-editor-title'>{introCard.title}</p>
+          <p className='slate-editor-tag'>{introCard.tag}</p>
+        </div>
+
+        <div className='slate-editor-container'>
+        <Slate  editor={editor} initialValue={hotTopicItem}>
            <Editable readOnly={is_readonly} renderElement={props => <Element {...props} />} placeholder="Enter some plain text..." />
          </Slate>
+        </div>
+
 
         {
-          
          comments.map(x=> {
           return (
             <div className='post-board-comment' key={x.id}>

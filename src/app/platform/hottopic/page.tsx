@@ -2,12 +2,12 @@ import './hottopic.scss';
 import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
 import {API} from '@/api_data';
 import React from 'react'
-import {Hottopic_List} from '@/data_structure';
+import {Hottopic_IntroCard} from '@/data_structure';
 import Link from 'next/link';
 
 export default async function RenderHotTopicItemPage() {
 
-	let hotTopicList : Hottopic_List[] = [];
+	let hotTopicList : Hottopic_IntroCard[] = [];
 	let url = Combine_API(API.GetHotTopicList);
 
 	console.log(url);

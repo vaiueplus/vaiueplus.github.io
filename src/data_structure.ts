@@ -29,15 +29,19 @@ export interface LearningResourceInterface {
 }
 
 //#region Hot Topic
-export interface Hottopic_List {
-    database_id: string,
+export interface Hottopic_IntroCard {
+    database_id?: string,
+    title?: string,
+    tag ?: string,
+
     comment_length: number,
-    title: string,
+    saved_length: number,
 }
 
 export interface Hottopic_Item {
     blocks: Hottopic_Block[],
     comments: Comment_Block[],
+    intro: Hottopic_IntroCard,
 }
 
 export interface Hottopic_Block {

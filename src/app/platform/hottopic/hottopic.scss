@@ -53,6 +53,28 @@
     padding: 2em;
     border-radius: 1em;
 
+
+    .slate-editor-header {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        margin-bottom: 1em;
+        gap:1em;
+
+
+        .slate-editor-title, .slate-editor-tag  {
+            border-radius: 1em;
+            padding: 0.5em 1em;
+            background-color: v.$color_white_blue;
+            font-weight: 600;
+            padding: 0.5em 1em;
+        }
+
+        .slate-editor-tag  {
+            background-color: v.$color_shallow_blue;
+        }
+    }
+
     .news_feed {
         border-radius: 1em;
         padding: 0.5em 1em;
@@ -69,10 +91,6 @@
         @media screen and (max-width: 768px) {
             display: none;
         }
-    }
-
-    .back-btn {
-        margin-bottom: 1em;
     }
 
     .post-board-comment {
