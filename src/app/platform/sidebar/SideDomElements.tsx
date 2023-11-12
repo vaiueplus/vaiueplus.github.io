@@ -22,7 +22,7 @@ export const VerticalSideBarDom  = () => {
 	</ul>
 
 	<p className="menu-label">
-		Learing
+		Learning
 	</p>
 	<ul className='menu-list'>
 		<SidebarDesktopLink name="Video resource" url="/platform/learning/video_resources"></SidebarDesktopLink>
@@ -32,7 +32,7 @@ export const VerticalSideBarDom  = () => {
 		Tools
 	</p>
 	<ul className='menu-list'>
-		<SidebarDesktopLink name="Tools review" url="/platform/tools/tools_review"></SidebarDesktopLink>
+		<SidebarDesktopLink name="Tools review" url="/platform/tools"></SidebarDesktopLink>
 	</ul>
 
     </div>;
@@ -76,7 +76,7 @@ export const VerticalSideBarDom  = () => {
 				</div>
 
 				<SidebarMobileLink name="Video resource" url="/platform/learning/video_resources" classname='navbar-item'></SidebarMobileLink>
-				<SidebarMobileLink name="Tools review" url="/platform/tools/tools_review" classname='navbar-item'></SidebarMobileLink>
+				<SidebarMobileLink name="Tools review" url="/platform/tools" classname='navbar-item'></SidebarMobileLink>
 			</div>
 		</div>
 	</nav>	

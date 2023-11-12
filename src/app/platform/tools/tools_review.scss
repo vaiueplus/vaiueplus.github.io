@@ -1,0 +1,61 @@
+@use '/styles/variable' as v;
+
+.tool-note-page {
+
+    .note-comp
+    {
+        background-color: v.$color_white_dark;
+        padding: 1em 2em;
+        border-radius: 1em;
+    
+        .note-header-comp {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            gap: 1em;
+            
+            h2 {
+                font-size: 2em;
+                font-weight: 600;
+            }
+
+            .note-header-actions{
+                margin-left: auto;
+    
+            }
+        }
+
+        .note-item-comp {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            border-radius: 1em;
+            border: solid 1px black;
+            padding: 0.5em 1em;
+            
+            p {
+                overflow:hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;        
+            }
+
+            img {
+                margin-left: auto;
+
+                
+                @media screen and (max-width: 768px) {
+                    display: none;
+                }
+            }
+
+            &:hover {
+                border: solid 1px v.$color_light_blue;
+                color: v.$color_light_blue;
+            }
+        }
+
+
+    }
+
+
+}
