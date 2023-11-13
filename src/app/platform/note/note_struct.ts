@@ -6,7 +6,7 @@ type NoteHeaderZusStore = {
     notes: List<Notion_Header>,
     set: (note_header: Notion_Header[]) => void,
     add: (note_header: Notion_Header) => void,
-    remove: (id: string) => void,
+    remove: (id: string) => boolean,
     removeAll: () => void
 }
 
@@ -16,16 +16,19 @@ type NoteBlockZusStore = {
     remove: (id: string) => void,
 }
 
-
-const useBearStore = create<NoteHeaderZusStore>((set, get) => ({
+export const useNoteHeaderStore = create<NoteHeaderZusStore>((set, get) => ({
     notes: List<Notion_Header>(),
 
     set: (note_header: Notion_Header[]) => {
-
+        set( () => {
+            return ({notes: List(note_header)}) 
+        });
     },
 
     add: (note_header: Notion_Header) =>  {
-
+        set( state => {
+            return ({notes: state.notes.push(note_header)}) 
+        });
     },
 
     remove: (id: string) => {
@@ -41,10 +44,11 @@ const useBearStore = create<NoteHeaderZusStore>((set, get) => ({
 
             return ({notes: state.notes}) 
         });
+
+        return true;
     },
 
     removeAll: () => {
         set( state => ({notes: state.notes.clear()}) );
     }
-
-  }))
+  }));

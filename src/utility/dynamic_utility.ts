@@ -36,14 +36,20 @@ export function set_cookie(cname : string, cvalue: string, expire_days: number) 
 
 export function get_unique_id() {
     let key = "uuid";
+    
+    try {
+      let unique_id = window.localStorage.getItem(key);
 
-    var unique_id = window.localStorage.getItem(key);
+      if (unique_id == null) {
+          var uuid = uuidv4();
+          localStorage.setItem(key, uuid);
+          unique_id = uuid;
+      }
+  
+      return unique_id; 
+    } catch{
 
-    if (unique_id == null) {
-        var uuid = uuidv4();
-        localStorage.setItem(key, uuid);
-        unique_id = uuid;
     }
 
-    return unique_id;
+    return "";
 }
