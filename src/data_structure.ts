@@ -29,22 +29,23 @@ export interface LearningResourceInterface {
 }
 
 //#region Hot Topic
-export interface Hottopic_IntroCard {
+export interface Notion_Header {
     database_id?: string,
     title?: string,
-    tag ?: string,
+    last_edited_time?: string,
 
-    comment_length: number,
-    saved_length: number,
+    tag?: string,
+    comment_length?: number,
+    saved_length?: number,
 }
 
-export interface Hottopic_Item {
-    blocks: Hottopic_Block[],
+export interface Database_Item {
+    blocks: Notion_Block[],
+    intro: Notion_Header,
     comments: Comment_Block[],
-    intro: Hottopic_IntroCard,
 }
 
-export interface Hottopic_Block {
+export interface Notion_Block {
     type : string,
     value: string
     color?: string,

@@ -1,5 +1,5 @@
 import {UICategoryInterface, UITopicInterface, UISubjectInterface, LearningResourceDictInterface} from './data_structure';
-import {Combine_Path} from './utility/dynamic_utility';
+import {Combine_Path} from './utility/static_utility';
 
 export const SUBJECT_LAW_LEARNING = "SUBJECT_LAW_LEARNING";
 

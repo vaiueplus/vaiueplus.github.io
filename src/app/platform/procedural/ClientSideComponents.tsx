@@ -1,7 +1,7 @@
 'use client';
 import {useState, useEffect} from 'react';
 
-import { Combine_Path, get_cookie, set_cookie } from '@/utility/dynamic_utility';
+import { Combine_Path, get_cookie, set_cookie } from '@/utility/static_utility';
 import { GetSubjectComponent, GetTopicComponent, LawLearningJSON, PageIDTable, CoockeTable, LangCodeTable } from '@/static_data';
 import { LearningItemComponent, ShareTopicComponent } from './ShareComponents';
 import { LearningResourceInterface, UITopicInterface } from '@/data_structure';

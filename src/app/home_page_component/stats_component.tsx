@@ -1,4 +1,4 @@
-import { Combine_Path } from "@/utility/dynamic_utility";
+import { Combine_Path } from "@/utility/static_utility";
 
 export const RenderStatsComponent  = () => {
 

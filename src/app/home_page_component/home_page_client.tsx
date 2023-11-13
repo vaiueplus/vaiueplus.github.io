@@ -1,5 +1,5 @@
 'use client';
-import { Is_Email, DoDelayAction } from '@/utility/dynamic_utility';
+import { Is_Email, DoDelayAction } from '@/utility/static_utility';
 import {useState, useEffect} from 'react';
 
 const OnNotionEmailSubscription = async function () {

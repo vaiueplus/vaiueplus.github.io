@@ -1,10 +1,11 @@
 'use client'
 
 import './note.scss';
-import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
+import {Combine_API, Combine_Path, FormatString} from '@/utility/static_utility';
 import {API} from '@/api_data';
 import React, { useMemo, useEffect, useState } from 'react'
-import {Hottopic_Item} from '@/data_structure';
+import {Database_Item} from '@/data_structure';
+import { set_cookie, get_cookie} from "@/utility/dynamic_utility";
 
 
 export function NoteFloatingBar() {

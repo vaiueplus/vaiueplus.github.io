@@ -1,5 +1,5 @@
 import '../hottopic.scss';
-import {Combine_API} from '@/utility/dynamic_utility';
+import {Combine_API} from '@/utility/static_utility';
 import {API} from '@/api_data';
 import React from 'react'
 import {RenderSlateEditor} from '../slate_component';

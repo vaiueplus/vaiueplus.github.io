@@ -1,10 +1,10 @@
 'use client'
 
 import './hottopic.scss';
-import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
+import {Combine_API, Combine_Path, FormatString} from '@/utility/static_utility';
 import {API} from '@/api_data';
 import React, { useMemo, useEffect, useState } from 'react'
-import {Comment_Block, Hottopic_Block, Hottopic_IntroCard, Hottopic_Item} from '@/data_structure';
+import {Comment_Block, Notion_Block, Notion_Header, Database_Item} from '@/data_structure';
 import { createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
@@ -17,7 +17,7 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
     const router = useRouter();
     let hotTopicItem : any[] = [];
 
-    const [introCard, setIntroCard] = useState<Hottopic_IntroCard>({saved_length: 0, comment_length: 0});
+    const [introCard, setIntroCard] = useState<Notion_Header>({saved_length: 0, comment_length: 0});
     const [comments, setComments] = useState<Comment_Block[]>([]);
 
     const is_readonly = true;
@@ -32,7 +32,7 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
       .then(r => r.json())
       .then(data => {
 
-        let hot_topics : Hottopic_Item = data.result;
+        let hot_topics : Database_Item = data.result;
         hotTopicItem = (ParseItemsToSlates(hot_topics.blocks));        
         editor.insertNodes(hotTopicItem);
 
@@ -102,7 +102,7 @@ const Image = ({ attributes, children, element } : any) => {
 }
 
 
-function ParseItemsToSlates(blocks: Hottopic_Block[]) {
+function ParseItemsToSlates(blocks: Notion_Block[]) {
   if (blocks == null || blocks.length <= 0) {
     return [
       {

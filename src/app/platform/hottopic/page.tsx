@@ -1,13 +1,13 @@
 import './hottopic.scss';
-import {Combine_API, Combine_Path, FormatString} from '@/utility/dynamic_utility';
+import {Combine_API, Combine_Path, FormatString} from '@/utility/static_utility';
 import {API} from '@/api_data';
 import React from 'react'
-import {Hottopic_IntroCard} from '@/data_structure';
+import {Notion_Header} from '@/data_structure';
 import Link from 'next/link';
 
 export default async function RenderHotTopicItemPage() {
 
-	let hotTopicList : Hottopic_IntroCard[] = [];
+	let hotTopicList : Notion_Header[] = [];
 	let url = Combine_API(API.GetHotTopicList);
 
 	console.log(url);

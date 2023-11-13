@@ -1,8 +1,10 @@
 'use client'
 
-import { Combine_Path } from "@/utility/dynamic_utility";
+import { Combine_Path } from "@/utility/static_utility";
+import {  set_cookie, get_unique_id} from "@/utility/dynamic_utility";
 
 export const RenderNotePage = function() {
+    console.log(get_unique_id());
 
     return (
         <div className="note-comp">
