@@ -1,9 +1,10 @@
 'use client'
 
-import { Combine_Path } from "@/utility/static_utility";
+import { Combine_API, Combine_Path, FormatString } from "@/utility/static_utility";
 import {  set_cookie, get_unique_id} from "@/utility/dynamic_utility";
 import { useNoteHeaderStore } from "../../../model/note_zustand";
 import { useEffect } from "react";
+import { API } from "@/api_data";
 
 export const RenderNotePage = function() {
 
@@ -30,6 +31,19 @@ const NoteHeaderComp = function(props:any) {
 
 const NoteBodyComp = function(props:any) {
     const note_list = useNoteHeaderStore((state) => state.notes);
+
+    useEffect(() => {
+        // let url = FormatString(API.GetHotTopicItem, [item_id]);
+        //     url = Combine_API(url);
+        let url = FormatString(API.GetHotTopicItem, [get_unique_id()]);
+        
+        fetch(Combine_API(url))
+        .then(r => r.json())
+        .then(data => {
+            console.log(data.result)
+            set_notes_func(data.result);
+        });
+      },[]);
 
     return (
         <div className="note-body-comp">
