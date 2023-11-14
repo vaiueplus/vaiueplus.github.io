@@ -4,28 +4,28 @@ import {create} from 'zustand';
 
 type NoteHeaderZusStore = {
     notes: List<Notion_Header>,
-    set: (note_header: Notion_Header[]) => void,
-    add: (note_header: Notion_Header) => void,
+    new: (note_header: Notion_Header[]) => void,
+    push: (note_header: Notion_Header) => void,
     remove: (id: string) => boolean,
     removeAll: () => void
 }
 
 type NoteBlockZusStore = {
     notes: Map <string, Database_Item>,
-    add: (id: string, note: Database_Item) => void,
+    set: (id: string, note: Database_Item) => void,
     remove: (id: string) => void,
 }
 
 export const useNoteHeaderStore = create<NoteHeaderZusStore>((set, get) => ({
     notes: List<Notion_Header>(),
 
-    set: (note_header: Notion_Header[]) => {
+    new: (note_header: Notion_Header[]) => {
         set( () => {
             return ({notes: List(note_header)}) 
         });
     },
 
-    add: (note_header: Notion_Header) =>  {
+    push: (note_header: Notion_Header) =>  {
         set( state => {
             return ({notes: state.notes.push(note_header)}) 
         });

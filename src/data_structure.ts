@@ -32,7 +32,7 @@ export interface LearningResourceInterface {
 export interface Notion_Header {
     database_id?: string,
     title?: string,
-    last_edited_time?: string,
+    last_edited_time: string,
 
     tag?: string,
     comment_length?: number,

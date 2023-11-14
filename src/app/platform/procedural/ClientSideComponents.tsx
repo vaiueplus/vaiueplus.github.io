@@ -1,11 +1,12 @@
 'use client';
 import {useState, useEffect} from 'react';
 
-import { Combine_Path, get_cookie, set_cookie } from '@/utility/static_utility';
+import { Combine_Path } from '@/utility/static_utility';
 import { GetSubjectComponent, GetTopicComponent, LawLearningJSON, PageIDTable, CoockeTable, LangCodeTable } from '@/static_data';
 import { LearningItemComponent, ShareTopicComponent } from './ShareComponents';
 import { LearningResourceInterface, UITopicInterface } from '@/data_structure';
 import Link from 'next/link';
+import { get_cookie, set_cookie } from '@/utility/dynamic_utility';
 
 export const GetProceduralComponent = (topic_id : string) => {
     let parent_interface = GetSubjectComponent("SUBJECT_LAW_LEARNING");
@@ -25,7 +26,6 @@ export const GetProceduralComponent = (topic_id : string) => {
     });
 
     function onLangCallback(code: string) {
-        console.log(code);
         set_cookie(CoockeTable.Procedural_Language_Code, code, 30);
         setLangCode(code);
     }

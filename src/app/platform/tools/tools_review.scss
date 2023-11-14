@@ -39,7 +39,7 @@
                 text-overflow: ellipsis;        
             }
 
-            img {
+            object {
                 margin-left: auto;
 
                 
@@ -51,6 +51,12 @@
             &:hover {
                 border: solid 1px v.$color_light_blue;
                 color: v.$color_light_blue;
+                cursor:pointer;
+
+                object {
+                    filter: invert(20%) sepia(89%) saturate(2111%) hue-rotate(201deg) brightness(97%) contrast(103%);
+
+                }
             }
         }
 

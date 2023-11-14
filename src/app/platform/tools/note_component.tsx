@@ -2,7 +2,7 @@
 
 import { Combine_Path } from "@/utility/static_utility";
 import {  set_cookie, get_unique_id} from "@/utility/dynamic_utility";
-import { useNoteHeaderStore } from "../note/note_struct";
+import { useNoteHeaderStore } from "../../../model/note_zustand";
 import { useEffect } from "react";
 
 export const RenderNotePage = function() {
@@ -30,21 +30,6 @@ const NoteHeaderComp = function(props:any) {
 
 const NoteBodyComp = function(props:any) {
     const note_list = useNoteHeaderStore((state) => state.notes);
-    const set_notes_func = useNoteHeaderStore((state) => state.set);
-
-    useEffect(() => {
-        // let url = FormatString(API.GetHotTopicItem, [item_id]);
-        //     url = Combine_API(url);
-    
-        fetch("http://localhost:8032/note_list/22203939")
-        .then(r => r.json())
-        .then(data => {
-            console.log(data.result)
-            set_notes_func(data.result);
-        });
-      },[]);
-
-    console.log(get_unique_id());
 
     return (
         <div className="note-body-comp">
@@ -60,7 +45,8 @@ const NoteBodyComp = function(props:any) {
                 <p>{x.title}</p>
                 <p>{x.last_edited_time}</p>
                 </section>
-                <img src= {Combine_Path("texture/platform/expand.png")}></img>
+
+                <object data={Combine_Path("texture/platform/expand.svg")} > </object>
                 </div> )
             })
         }

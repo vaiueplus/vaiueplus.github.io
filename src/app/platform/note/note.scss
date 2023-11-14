@@ -29,6 +29,13 @@
     
     }
 
+    .note-floating-item {
+        background-color: v.$color_white;
+        color: black;
+        padding: 0.8em 2em;
+        border-radius: 2em; 
+    }
+
     @media screen and (max-width: 768px) {
         display: none;
         margin-bottom: 0em;
