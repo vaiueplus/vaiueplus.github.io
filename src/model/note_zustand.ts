@@ -16,6 +16,42 @@ type NoteBlockZusStore = {
     remove: (id: string) => void,
 }
 
+type NoteFocusZusStore = {
+    note_id: string,
+    set_id: (id: string | undefined) => void,
+    is_valid: () => boolean,
+}
+
+type NoteEditChangeZusStore = {
+    change_flag: boolean,
+    set_change_flag: (on: boolean) => void,
+}
+
+export const useNoteEditStore = create<NoteEditChangeZusStore>(
+    (set, get) => ({
+    change_flag: false,
+
+    set_change_flag(on) {
+        set( () => {
+            return ({change_flag: on}) 
+        });
+    }
+}));
+
+export const useNoteFocusStore = create<NoteFocusZusStore>(
+    (set, get) => ({
+    note_id: "",
+    set_id: (id: string | undefined) => {
+        if(id == undefined) return;
+        if(get().note_id == id) return;
+
+        set( () => {
+            return ({...get(), note_id: id}) 
+        });
+    },
+    is_valid: () => get().note_id != undefined && get().note_id != ""
+}));
+
 export const useNoteHeaderStore = create<NoteHeaderZusStore>((set, get) => ({
     notes: List<Notion_Header>(),
 

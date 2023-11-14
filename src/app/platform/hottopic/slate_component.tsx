@@ -9,15 +9,14 @@ import { createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { useRouter } from 'next/navigation';
-
-
+import RenderSlatePretty, {ParseItemsToSlates} from '@/app/slate_editor/slate_pretty';
 
 export function RenderSlateEditor({item_id} : {item_id: string}) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const router = useRouter();
     let hotTopicItem : any[] = [];
 
-    const [introCard, setIntroCard] = useState<Notion_Header>({saved_length: 0, comment_length: 0});
+    const [introCard, setIntroCard] = useState<Notion_Header>({last_edited_time: "", saved_length: 0, comment_length: 0});
     const [comments, setComments] = useState<Comment_Block[]>([]);
 
     const is_readonly = true;
@@ -41,7 +40,6 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
       });
     },[]);
 
-
     return (
       <div className="post-board">
 
@@ -52,11 +50,8 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
         </div>
 
         <div className='slate-editor-container'>
-        <Slate  editor={editor} initialValue={hotTopicItem}>
-           <Editable readOnly={is_readonly} renderElement={props => <Element {...props} />} placeholder="Enter some plain text..." />
-         </Slate>
+          <RenderSlatePretty editor={editor} default_data={hotTopicItem} readOnly={is_readonly} onChangeCallback={null}></RenderSlatePretty>
         </div>
-
 
         {
          comments.map(x=> {
@@ -73,71 +68,3 @@ export function RenderSlateEditor({item_id} : {item_id: string}) {
     )
 }
 
-
-const Element = (props : any)=> {
-  const { attributes, children, element } = props
-
-  switch (element.type) {
-    case 'image':
-      return <Image {...props} />
-    default:
-      return <p {...attributes}>{children}</p>
-  }
-}
-
-const Image = ({ attributes, children, element } : any) => {
-
-  return (
-    <div {...attributes}>
-      {children}
-      <div
-        contentEditable={false}
-      >
-        <img
-          src={element.url}
-        />
-      </div>
-    </div>
-  )
-}
-
-
-function ParseItemsToSlates(blocks: Notion_Block[]) {
-  if (blocks == null || blocks.length <= 0) {
-    return [
-      {
-        type: 'paragraph',
-        children: [
-          { text: 'Sorry no conent here'},
-        ],
-      }];
-  }
-  let slate_blocks : any[] = [];
-  let block_length = blocks.length;
-
-  for (let i = 0; i < block_length; i++) {
-    let block = blocks[i];
-
-    if (block.type == "paragraph") {
-      slate_blocks.push(
-        {
-          type: 'paragraph',
-          children: [
-            { text: block.value },
-          ],
-        }
-      );
-    } if (block.type == "image") {
-
-      slate_blocks.push(
-        {
-          type: 'image',
-          url: block.value,
-          children: [{ text: '' }],
-        }
-      );  
-    }
-  }
-  
-  return slate_blocks;
-}

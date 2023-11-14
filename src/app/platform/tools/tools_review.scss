@@ -1,7 +1,6 @@
 @use '/styles/variable' as v;
 
 .tool-note-page {
-
     .note-comp
     {
         background-color: v.$color_white_dark;
@@ -48,6 +47,16 @@
                 }
             }
 
+            &.active{
+                border: solid 1px v.$color_red_shallow;
+                color: v.$color_red_shallow;
+
+                object {
+                    filter: brightness(0) saturate(100%) invert(39%) sepia(73%) saturate(953%) hue-rotate(327deg) brightness(90%) contrast(101%);
+                }
+            }
+         
+
             &:hover {
                 border: solid 1px v.$color_light_blue;
                 color: v.$color_light_blue;
@@ -55,13 +64,22 @@
 
                 object {
                     filter: invert(20%) sepia(89%) saturate(2111%) hue-rotate(201deg) brightness(97%) contrast(103%);
-
                 }
             }
         }
-
-
     }
 
 
+    .preview-comp {
+        div[role="textbox"] {
+
+            padding : 0.5em;
+
+            &:focus{
+                outline-style: auto; 
+                outline-width: 5px;
+                outline-color: v.$color_red_shallow;;    
+            }
+        }
+    }
 }
