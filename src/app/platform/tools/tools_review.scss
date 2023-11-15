@@ -48,11 +48,11 @@
             }
 
             &.active{
-                border: solid 1px v.$color_red_shallow;
-                color: v.$color_red_shallow;
+                border: solid 1px v.$color_green_shallow;
+                color: v.$color_green_shallow;
 
                 object {
-                    filter: brightness(0) saturate(100%) invert(39%) sepia(73%) saturate(953%) hue-rotate(327deg) brightness(90%) contrast(101%);
+                    filter: brightness(0) saturate(100%) invert(58%) sepia(95%) saturate(336%) hue-rotate(93deg) brightness(94%) contrast(93%);
                 }
             }
          
@@ -78,7 +78,7 @@
             &:focus{
                 outline-style: auto; 
                 outline-width: 5px;
-                outline-color: v.$color_red_shallow;;    
+                outline-color: v.$color_green_shallow;;    
             }
         }
     }
