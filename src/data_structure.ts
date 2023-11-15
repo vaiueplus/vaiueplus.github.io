@@ -46,6 +46,7 @@ export interface Database_Item {
 }
 
 export interface Notion_Block {
+    id: string,
     type : string,
     value: string
     color?: string,

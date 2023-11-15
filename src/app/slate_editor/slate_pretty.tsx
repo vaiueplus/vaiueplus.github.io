@@ -1,6 +1,6 @@
 'use client'
 
-import { BaseEditor, Descendant, createEditor } from 'slate'
+import { BaseEditor, Descendant, Operation, createEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react'
 import { HistoryEditor, withHistory } from 'slate-history'
 import { Notion_Block } from '@/data_structure';
@@ -11,9 +11,12 @@ export default function RenderSlatePretty({ editor, default_data, readOnly, onCh
 
     return (
       <Slate editor={editor} initialValue={default_data} onValueChange={(value) => {
-        if (readOnly) return;
+        if (readOnly) return;          
         
-        console.log("onValueChange");
+        const ops = editor.operations
+
+        
+        console.log(value);
         onChangeCallback?.(value);
       }} >
         <Editable readOnly={ readOnly } renderElement={props => <Element {...props} />} placeholder="Enter some plain text..."
@@ -65,6 +68,7 @@ export function ParseItemsToSlates(blocks: Notion_Block[]) {
       if (block.type == "paragraph") {
         slate_blocks.push(
           {
+            key: block.id,
             type: 'paragraph',
             children: [
               { text: block.value },
@@ -84,4 +88,23 @@ export function ParseItemsToSlates(blocks: Notion_Block[]) {
     }
     
     return slate_blocks;
+  }
+
+  export function SlateToBlock(nodes: Descendant[]) {
+    let n = nodes.length;
+    let blocks : Notion_Block[] = [];
+
+    for (let i = 0; i < n; i++) {
+      let node : any = nodes[i];
+
+      if (node["type"] == "paragraph" && node["children"].length > 0) {
+        blocks.push({
+          id: "",
+          type : "paragraph",
+          value: node["children"][0]["text"]
+        });
+      }
+    }
+
+    return blocks;
   }
