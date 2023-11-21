@@ -18,7 +18,7 @@ export function NoteFloatingBar() {
         //     url = Combine_API(url);
         let id = get_unique_id();
         console.log("UserID " + id);
-        let url = FormatString(API.GetNoteList, [id]);
+        let url = FormatString(API.GetNoteList, [id, 0]);
 
         fetch(Combine_API(url))
         .then(r => r.json())

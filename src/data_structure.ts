@@ -60,3 +60,14 @@ export interface Comment_Block {
     owner_name: string,
 }
 //#endregion
+
+//#region User Account
+export interface UserSSO_Struct {
+    sub : string,
+    name: string,
+    given_name: string,
+    family_name: string,
+    picture: string,
+    email: string,
+}
+//#endregion

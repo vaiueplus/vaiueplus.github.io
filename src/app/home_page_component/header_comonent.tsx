@@ -7,7 +7,7 @@ export const RenderHeaderComponent  = async () => {
     return (
         <nav className="navbar homepage_header container" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a className="navbar-item" href="#">
+          <a className="navbar-item" href="/">
             <img src={Combine_Path('texture/icon/vaiue_logo.png')} ></img>
           </a>
           <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -41,6 +41,10 @@ export const RenderHeaderComponent  = async () => {
             <div className="navbar-item">
               <Link href="/platform/" className="button">
                 開始使用
+              </Link>
+
+              <Link href="/login" className="button">
+                登入
               </Link>
             </div>
           </div>
