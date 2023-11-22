@@ -1,3 +1,5 @@
+import { UserSSO_Struct } from "@/data_structure";
+
   export function Combine_Path(path: string) {
     return process.env.NEXT_PUBLIC_ROOT_PATH + path;
   }
@@ -14,6 +16,10 @@
     console.log(result);
 
     return result;
+  }
+
+  export function GetRelativeURL(url : string) {
+    return (url.replace(/^(?:\/\/|[^/#]+)*\//, ''));
   }
 
   export function DoDelayAction(time : number, callback: () => void) : Promise<void> {
@@ -33,9 +39,19 @@
     });
 }
 
-
 export function FormatString(string: string, params: any[]) {
   return string.replace(/{(\d+)}/g, (match, index) => {
     return typeof params[index] !== 'undefined' ? params[index] : match;
   });
+}
+
+export function decodeJwtResponseFromGoogleAPI(token: string) : UserSSO_Struct {
+  let base64Url = token.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+
+  let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload)
 }

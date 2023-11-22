@@ -30,6 +30,8 @@ export interface LearningResourceInterface {
 
 //#region Hot Topic
 export interface Notion_Header {
+    _id?: string,
+
     database_id?: string,
     title?: string,
     last_edited_time: string,

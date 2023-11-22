@@ -43,11 +43,11 @@ const NoteBodyComp = function(props:any) {
                 let date = new Date(x.last_edited_time);
             
             let note_item_class = "note-item-comp"
-            if (note_focus_id == x.database_id) note_item_class += " active"; 
+            if (note_focus_id == x._id) note_item_class += " active"; 
 
             return (
-                <div className={note_item_class} key={x.database_id} onClick={ () => {
-                    note_focus_set(x.database_id)
+                <div className={note_item_class} key={x._id} onClick={ () => {
+                    note_focus_set(x._id)
                 } }>
                 <section>
                 <p>{x.title}</p>

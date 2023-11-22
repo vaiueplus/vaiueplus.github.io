@@ -37,7 +37,7 @@ export function NoteFloatingBar() {
                 note_list.map(x=> {
                     if (x.title == "" || x.title == undefined) return;
 
-                    return <NoteFloatingItemView notion_header={x} key={x.database_id}></NoteFloatingItemView>
+                    return <NoteFloatingItemView notion_header={x} key={x._id}></NoteFloatingItemView>
                 })
                 }
                 </div>
