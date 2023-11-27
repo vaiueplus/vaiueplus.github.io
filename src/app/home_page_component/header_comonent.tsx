@@ -42,10 +42,6 @@ export const RenderHeaderComponent  = async () => {
               <Link href="/platform/" className="button">
                 開始使用
               </Link>
-
-              <Link href="/login" className="button">
-                登入
-              </Link>
             </div>
           </div>
         </div>        

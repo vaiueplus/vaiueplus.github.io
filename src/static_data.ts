@@ -3,8 +3,12 @@ import {Combine_Path} from './utility/static_utility';
 
 export const SUBJECT_LAW_LEARNING = "SUBJECT_LAW_LEARNING";
 
-export const CoockeTable = Object.freeze({
+export const CoockieTable = Object.freeze({
     Procedural_Language_Code : "procedural_language_code",
+});
+
+export const LocalStorageTable = Object.freeze({
+    Account : "account",
 });
 
 export const LangCodeTable = Object.freeze({

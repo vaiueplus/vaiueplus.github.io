@@ -4,28 +4,22 @@ import { BaseEditor, Descendant, Operation, createEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react'
 import { HistoryEditor, withHistory } from 'slate-history'
 import { Notion_Block } from '@/data_structure';
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
-export default function RenderSlatePretty({ editor, default_data, readOnly, onChangeCallback }:
-        { editor: BaseEditor & HistoryEditor & ReactEditor, default_data: any[], readOnly: boolean, onChangeCallback: ((x : Descendant[]) => void) | null }) {
-          
+export default function RenderSlateContent({placeholder_text, default_data, readOnly }: 
+    {placeholder_text: string, default_data: any[], readOnly: boolean}) {
+    const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const renderLeaf = useCallback( (props: any) => <Leaf {...props} />, [])
 
     return (
       <Slate editor={editor} initialValue={default_data} onValueChange={(value) => {
         if (readOnly) return;          
         
-        const ops = editor.operations
-
-        
         console.log(value);
-        onChangeCallback?.(value);
       }} >
 
-
-
         <Editable readOnly={ readOnly } renderElement={props => <Element {...props} />} renderLeaf={renderLeaf}
-                  placeholder="Enter some plain text..."  />
+                  placeholder={placeholder_text}  />
       </Slate>
     );
 }

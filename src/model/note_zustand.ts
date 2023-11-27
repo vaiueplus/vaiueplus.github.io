@@ -1,6 +1,7 @@
 import { Database_Item, Notion_Header } from '@/data_structure';
 import { List , Map } from 'immutable';
 import {create} from 'zustand';
+import { NoteFullBlock } from './note_data_struct';
 
 type NoteHeaderZusStore = {
     notes: List<Notion_Header>,
@@ -11,8 +12,8 @@ type NoteHeaderZusStore = {
 }
 
 type NoteBlockZusStore = {
-    notes: Map <string, Database_Item>,
-    set: (id: string, note: Database_Item) => void,
+    notes: Map <string, NoteFullBlock>,
+    set: (id: string, note: NoteFullBlock) => void,
     remove: (id: string) => void,
 }
 
@@ -22,18 +23,34 @@ type NoteFocusZusStore = {
     is_valid: () => boolean,
 }
 
-type NoteEditChangeZusStore = {
-    change_flag: boolean,
-    set_change_flag: (on: boolean) => void,
+type NoteEditZusStore = {
+    full_block: NoteFullBlock,
+    set_full_block: (block: NoteFullBlock) => void,
 }
 
-export const useNoteEditStore = create<NoteEditChangeZusStore>(
+export const useNoteDictStore = create<NoteBlockZusStore>(
     (set, get) => ({
-    change_flag: false,
+        notes: Map<string, NoteFullBlock>(),
 
-    set_change_flag(on) {
+        set(id: string, note: NoteFullBlock) {
+            set(state => {
+                return ({notes: state.notes.set(id, note)}) 
+            });
+    },
+    remove(id) {
+        set(state => {
+            return ({notes: state.notes.remove(id)}) 
+        });
+    },
+}));
+
+export const useNoteEditStore = create<NoteEditZusStore>(
+    (set, get) => ({
+        full_block: {id : "", source : {sources: []}, blocks: [] },
+
+        set_full_block(block: NoteFullBlock) {
         set( () => {
-            return ({change_flag: on}) 
+            return ({full_block: block}) 
         });
     }
 }));

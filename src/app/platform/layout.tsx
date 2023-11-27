@@ -21,7 +21,6 @@ export default function RootLayout({
         <aside><VerticalSideBarDom></VerticalSideBarDom><HorizontalSideBarDom></HorizontalSideBarDom></aside>
         <main>
           <ExecLoginComponent></ExecLoginComponent>
-          <NoteFloatingBar></NoteFloatingBar>
           {children}
           </main>
     </div>
