@@ -19,6 +19,17 @@ export const LangCodeTable = Object.freeze({
     Korean: "kr"
 });
 
+export const EventID = Object.freeze({
+    MouseDown : "event@mouse_down",
+});
+
+export const NoteSourceIcon = Object.freeze({
+    BingAI : "texture/notes/bing-ai-icon.png",
+    ChatGPT : "texture/notes/chatgpt-icon.png",
+    Claude : "texture/notes/claude-ai-icon.png",
+    Bard : "texture/notes/google-bard-icon.png",
+});
+
 export const PageIDTable = Object.freeze({
     Law_Learning : "law_learning",
     Law_Learning_Topic: "topic",

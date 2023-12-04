@@ -4,22 +4,44 @@ import { BaseEditor, Descendant, Operation, createEditor } from 'slate'
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react'
 import { HistoryEditor, withHistory } from 'slate-history'
 import { Notion_Block } from '@/data_structure';
-import React, { useCallback, useMemo } from 'react'
+import React, { Fragment, useCallback, useMemo } from 'react'
 
-export default function RenderSlateContent({placeholder_text, default_data, readOnly }: 
-    {placeholder_text: string, default_data: any[], readOnly: boolean}) {
+export default function RenderSlateContent({index, id, placeholder_text, default_data, readOnly, finish_edit_event, action_bar_event }: 
+    {index: number, id: string, placeholder_text: string, default_data: any[], readOnly: boolean, 
+      finish_edit_event: (id: string, value: Descendant[]) => void, action_bar_event: (id: string) => void }) {
+
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const renderLeaf = useCallback( (props: any) => <Leaf {...props} />, [])
+    let value_change_flag = false;
+    let descendents : Descendant[] = [];
+
+    let render_addon_btn = function(i: number) {
+      if (i <= 0) return <Fragment></Fragment>;
+      
+      return <button className='note-block-btn' onClick={() => action_bar_event(id)}>+</button>;
+    }
 
     return (
-      <Slate editor={editor} initialValue={default_data} onValueChange={(value) => {
-        if (readOnly) return;          
-        
-        console.log(value);
+      <Slate editor={editor}  initialValue={default_data}
+      
+      onValueChange={(value) => {
+        if (readOnly) return;       
+
+        descendents = value;
+        value_change_flag = true;
       }} >
 
         <Editable readOnly={ readOnly } renderElement={props => <Element {...props} />} renderLeaf={renderLeaf}
-                  placeholder={placeholder_text}  />
+			onBlur={() => {
+				if (value_change_flag) {
+					value_change_flag = false;
+					finish_edit_event(id, descendents);
+				}
+			}
+    }
+
+          placeholder={placeholder_text}  />
+          {render_addon_btn(index)}
       </Slate>
     );
 }

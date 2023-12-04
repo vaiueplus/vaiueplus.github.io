@@ -1,74 +1,134 @@
 'use client'
-import { useNoteFocusStore, useNoteEditStore } from "@/model/note_zustand";
+import { useNoteDictStore, useNoteFocusStore } from "@/model/note_zustand";
 import { Descendant, Operation, createEditor } from 'slate'
-import { Slate, Editable, withReact } from 'slate-react'
-import { withHistory } from 'slate-history'
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Fragment } from "react";
 import { Combine_API, FormatString } from "@/utility/static_utility";
 import { API } from "@/api_data";
-import { Database_Item, Notion_Block } from "@/data_structure";
 import RenderSlatePretty, { ParseItemsToSlates, SlateToBlock } from "@/app/slate_editor/slate_pretty";
 import RenderSlateContent from "@/app/slate_editor/slate_note_content";
-import { NoteBlockType } from "@/model/note_data_struct";
+import { GetEmptyNotePage, NoteBlockType, NotePageType, NoteRowType, NoteParagraphType, GetEmptyNoteBlock } from "@/model/note_data_struct";
+import { RenderSourcePanel, RenderSideActionBar } from "./floating_panel";
+import { MouseHelper } from "@/app/ui/mouse_helper";
+import {v4 as uuidv4} from 'uuid';
 
 export const RenderPreviewPage = function() {
-    const note_list = useNoteFocusStore();
-    const note_change_store = useNoteEditStore();
+    let floatActionbar = new RenderSideActionBar()
+    let floatSourcePanel = new RenderSourcePanel()
+    const focus_note_id = useNoteFocusStore((state) => state.note_id);
+    const note_dict = useNoteDictStore();
 
-    const unsub_callback = useNoteFocusStore.subscribe((state) => {
-        if (!state.is_valid()) return;
-
-        console.log(state.note_id);
-        // let url = FormatString(API.GetNoteBlock, [state.note_id]);
-        //     url = Combine_API(url);
-
-        // fetch(url)
-        // .then(r => r.json())
-        // .then(data => {
-        //     let blocks : Notion_Block[] = data.result;
-        //     editor.insertNodes(ParseItemsToSlates(blocks));
-        //     setReadOnly(false);
-        // });
-    });
-
-    const add_block = function() {
-        
-    }
+    const get_note_by_id= useNoteDictStore((state) => state.get);
+    const set_note_dict = useNoteDictStore((state) => state.set);
 
     // //OnDestroy
-    // useEffect(() => {
-    //     return () => {
-    //         note_change_store.set_change_flag(false);
-    //         console.log("Destroy");
-    //     };
-    // }, []);
+    useEffect(() => {
+        console.log(focus_note_id);
+        let mouse_helper = new MouseHelper();
+
+        mouse_helper.register_mouse_down((pos) => {
+            floatSourcePanel.mouse_down_event(pos);
+            floatActionbar.mouse_down_event(pos);
+        });
+        console.log("useEffect");
+
+        return () => {
+            console.log("Destroy");
+            mouse_helper.dispose();
+        };
+    }, []);
+
+    const on_slate_title_change = function(id: string, value: any[]) {
+
+        let paragraph : NoteRowType[] = 
+        value.map( x => {
+            return {
+                type: x.type,
+                children: x.children,
+            }
+        });
+        
+        change_block_value(id, paragraph);
+    }
+
+    const on_action_bar_click = function(id: string) {
+        console.log("on_action_bar_click " + id)
+        floatActionbar.show(true);
+        floatActionbar.set_position(MouseHelper.x, MouseHelper.y);
+    }
+
+    const change_block_value = function(block_id: string, rows: NoteRowType[]) {
+        let noteFullBlock = get_note_by_id(focus_note_id);
+        let block_index = noteFullBlock?.blocks.findIndex(x=>x.id == block_id);
+
+        if (noteFullBlock == null || block_index == undefined || block_index < 0) return;
+
+        noteFullBlock.blocks[block_index].row = rows;
+        note_dict.set(noteFullBlock);
+    }
+
+    const render_slate_contents = function() {
+        let noteFullBlock = get_note_by_id(focus_note_id);
+        if (noteFullBlock == undefined) return <div></div>
+
+        let initValue : React.JSX.Element[] = []; 
+
+        return (
+            <div>
+                <h2>{noteFullBlock.title}</h2>
+
+                <div key={noteFullBlock.blocks[0].id} className="note-block-comp">
+                    <RenderSlateContent index={0} id={noteFullBlock.blocks[0].id} default_data={noteFullBlock.blocks[0].row}
+                    readOnly={false} placeholder_text="Topic . . ."
+                    finish_edit_event={on_slate_title_change} action_bar_event={(id) => {}}></RenderSlateContent>
+                </div>
+
+                <Fragment>
+                {
+                    noteFullBlock.blocks.reduce((array, x, index) => {
+                        if (index == 0) return array;
+
+                        array.push(
+                            <div key={x.id} className="note-block-comp">
+                                <RenderSlateContent id={x.id} default_data={x.row} index={index}
+                                readOnly={false} 
+                                finish_edit_event={on_slate_title_change} 
+                                action_bar_event={on_action_bar_click}
+                                placeholder_text="Text from gpt"></RenderSlateContent>
+                            </div>
+                        );
+
+                        return array;
+                    }, initValue)
+                }
+                </Fragment>
+
+                <button className="button is-primary is-light" onClick={add_block}>Add+</button>
+                { floatSourcePanel.render() }
+                { floatActionbar.render() }
+            </div>
+        )
+    }
+
+    const add_block = function() {
+        // floatSourcePanel.show(true);
+        // floatSourcePanel.set_position(MouseHelper.x, MouseHelper.y);
+        add_new_row();
+    }
+
+    const add_new_row = function() {
+        let noteFullBlock = get_note_by_id(focus_note_id);
+        if (noteFullBlock == null) return;
+
+        let new_block = GetEmptyNoteBlock();
+        new_block.id = uuidv4();
+        noteFullBlock.blocks.push(new_block);
+
+        note_dict.set(noteFullBlock);
+    }
 
     return (
         <div className="preview-comp">
-
-            {/* <div>        
-            <button className="button is-primary is-light" disabled={!note_change_store.change_flag} 
-                onClick={() => {
-                    note_change_store.set_change_flag(false);
-
-                    UpdateNotionBlock(note_list.note_id, descendents);
-                }}>
-                Save
-            </button>
-
-            </div> */}
-            <h2>Note #111</h2>
-            <RenderSlateContent default_data={[{type: 'paragraph', children: [{id: "", text: '' }]}]} 
-            readOnly={false} placeholder_text="Enter your prompt theme here"></RenderSlateContent>
-
-            {/* {
-                 initialValue.map((x) => {
-                    return <RenderSlateContent key={x.id} default_data={[x]} readOnly={readOnly}
-                    placeholder_text="Enter some plain text..."></RenderSlateContent>
-                })
-            } */}
-
-            <button className="button is-primary is-light" onClick={add_block}>Add Block</button>
+            { render_slate_contents() }
         </div>
     );
 }

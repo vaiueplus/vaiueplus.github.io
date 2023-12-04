@@ -1,38 +1,54 @@
+import {v4 as uuidv4} from 'uuid';
 
-export const GetEmptyNoteBlock = function() {
-    let new_block : NoteFullBlock = {
+export const GetEmptyNotePage = function() {
+    let new_block : NotePageType = {
         id: "",
-        source: {sources: []},
-        blocks: [],            
-        is_new_block : true,
+        title: "",
+        date: "",
+        blocks: [GetEmptyNoteBlock()],//Only prepare header block
+        is_new_page : true,
     }
     return new_block;
 }
 
-export type NoteFullBlock = {
+export const GetEmptyNoteBlock = function() {
+    let new_block : NoteBlockType = {
+        id: "",
+        row: [{type: "paragraph", children: [{text: ""}]}],//Only prepare header block
+    }
+    return new_block;
+}
+
+//First Layer
+export type NotePageType = {
     id: string,
-    source: NoteSource,
+    title: string,
+    date: string,
+
     blocks : NoteBlockType[],
-    
-    is_new_block? : boolean,
+    is_new_page? : boolean,
+}
+
+//Second Layer
+export type NoteBlockType = {
+    id: string,
+    row : NoteRowType[],
 }
 
 export type NoteSource = {
     sources: string[]
 }
 
-//One block is one slate editor
-export type NoteBlockType = {
-    id: string,
+//Third Layer
+export type NoteRowType = {
     type: "image" | "paragraph",
     children: NoteParagraphType[],
-    
     content?: string,
     keyword?: NoteKeywordType[],
 }
 
+//Fourth Layer
 export type NoteParagraphType = {
-    id: string,
     text: string
     color?: string,
     bold?: boolean,

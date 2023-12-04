@@ -55,3 +55,14 @@ export function decodeJwtResponseFromGoogleAPI(token: string) : UserSSO_Struct {
 
   return JSON.parse(jsonPayload)
 }
+
+export function Lerp(x : number, y : number, t : number) {
+  return (1 - t) * x + (t * y);
+}
+
+export function PointBoxSection(x: number, y : number, left: number, right: number, top: number, down: number) {
+  return (
+    x > left && x < right &&
+    y < down && y > top
+  );
+}

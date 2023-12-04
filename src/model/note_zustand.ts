@@ -1,57 +1,72 @@
 import { Database_Item, Notion_Header } from '@/data_structure';
 import { List , Map } from 'immutable';
 import {create} from 'zustand';
-import { NoteFullBlock } from './note_data_struct';
+import { GetEmptyNotePage, NoteRowType, NotePageType } from './note_data_struct';
 
-type NoteHeaderZusStore = {
-    notes: List<Notion_Header>,
-    new: (note_header: Notion_Header[]) => void,
-    push: (note_header: Notion_Header) => void,
-    remove: (id: string) => boolean,
-    removeAll: () => void
-}
 
-type NoteBlockZusStore = {
-    notes: Map <string, NoteFullBlock>,
-    set: (id: string, note: NoteFullBlock) => void,
+type NotePageZusStore = {
+    notes_dict: Map <string, NotePageType>,
+    notes_array: List<string>,
+
+    get: (id: string) => NotePageType | undefined,
+
+    set: (note: NotePageType) => void,
+    set_array: (notes: NotePageType[]) => void,
+
     remove: (id: string) => void,
+    removeAll: () => void,
 }
 
+// Who is currently pick
 type NoteFocusZusStore = {
     note_id: string,
     set_id: (id: string | undefined) => void,
     is_valid: () => boolean,
 }
 
-type NoteEditZusStore = {
-    full_block: NoteFullBlock,
-    set_full_block: (block: NoteFullBlock) => void,
-}
+export const useNoteDictStore = create<NotePageZusStore>( (set, get) => ({
+    notes_dict: Map<string, NotePageType>(),
+    notes_array: List<string>(),
 
-export const useNoteDictStore = create<NoteBlockZusStore>(
-    (set, get) => ({
-        notes: Map<string, NoteFullBlock>(),
-
-        set(id: string, note: NoteFullBlock) {
-            set(state => {
-                return ({notes: state.notes.set(id, note)}) 
-            });
+    get(id) {
+        return get().notes_dict.get(id);
     },
+
+    set_array(notes: NotePageType[]) {
+        set(state => {
+            let cache_dict = state.notes_dict;
+            let cache_array = state.notes_array;
+
+            for (let n of notes) {
+                cache_dict = cache_dict.set(n.id, n);
+                cache_array = cache_array.push(n.id);
+            }
+
+            return ({notes_dict: cache_dict, notes_array: cache_array}) 
+        });
+    },
+    
+    set(note: NotePageType) {
+        set(state => {
+
+            if (state.notes_dict.has(note.id)) {
+                return ({ notes_dict: state.notes_dict.set(note.id, note) }) ;
+            }   
+            
+
+            return ({notes_dict: state.notes_dict.set(note.id, note), notes_array: state.notes_array.push(note.id) }) 
+        });
+    },
+
     remove(id) {
         set(state => {
-            return ({notes: state.notes.remove(id)}) 
+            let index = state.notes_array.findIndex(x=>x == id);
+            return ({notes_dict: state.notes_dict.remove(id), notes_array: state.notes_array.delete(index)}) 
         });
     },
-}));
 
-export const useNoteEditStore = create<NoteEditZusStore>(
-    (set, get) => ({
-        full_block: {id : "", source : {sources: []}, blocks: [] },
-
-        set_full_block(block: NoteFullBlock) {
-        set( () => {
-            return ({full_block: block}) 
-        });
+    removeAll: () => {
+        set( state => ({ notes_dict: state.notes_dict.clear(), notes_array: state.notes_array.clear() }) );
     }
 }));
 
@@ -68,40 +83,3 @@ export const useNoteFocusStore = create<NoteFocusZusStore>(
     },
     is_valid: () => get().note_id != undefined && get().note_id != ""
 }));
-
-export const useNoteHeaderStore = create<NoteHeaderZusStore>((set, get) => ({
-    notes: List<Notion_Header>(),
-
-    new: (note_header: Notion_Header[]) => {
-        set( () => {
-            return ({notes: List(note_header)}) 
-        });
-    },
-
-    push: (note_header: Notion_Header) =>  {
-        set( state => {
-            return ({notes: state.notes.push(note_header)}) 
-        });
-    },
-
-    remove: (id: string) => {
-        let index = get().notes.findIndex(x=>x.database_id == id);
-        if (index < 0) return false;
-
-        set( state => {
-
-            let index = state.notes.findIndex(x=>x.database_id == id);
-            
-            if (index >= 0)
-                return ({ notes: state.notes.delete(index) });
-
-            return ({notes: state.notes}) 
-        });
-
-        return true;
-    },
-
-    removeAll: () => {
-        set( state => ({notes: state.notes.clear()}) );
-    }
-  }));

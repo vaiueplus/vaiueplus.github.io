@@ -1,3 +1,4 @@
+import { MouseHelper } from './ui/mouse_helper';
 import '/styles/globals.scss';
 
 export default function RootLayout({
@@ -5,10 +6,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <script src="https://accounts.google.com/gsi/client" async defer></script>
-
       <body>
         {children}
       </body>
