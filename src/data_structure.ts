@@ -28,6 +28,8 @@ export interface LearningResourceInterface {
     learning_tags: string[]
 }
 
+export enum FloatActionBarState {Image, AI_Source}
+
 //#region Hot Topic
 export interface Notion_Header {
     _id?: string,

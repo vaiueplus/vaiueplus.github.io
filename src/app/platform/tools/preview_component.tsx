@@ -10,6 +10,8 @@ import { GetEmptyNotePage, NoteBlockType, NotePageType, NoteRowType, NoteParagra
 import { RenderSourcePanel, RenderSideActionBar } from "./floating_panel";
 import { MouseHelper } from "@/app/ui/mouse_helper";
 import {v4 as uuidv4} from 'uuid';
+import { FloatActionBarState } from "@/data_structure";
+import { AbstractMovable } from "@/app/ui/movable_view";
 
 export const RenderPreviewPage = function() {
     let floatActionbar = new RenderSideActionBar()
@@ -22,9 +24,7 @@ export const RenderPreviewPage = function() {
 
     // //OnDestroy
     useEffect(() => {
-        console.log(focus_note_id);
         let mouse_helper = new MouseHelper();
-
         mouse_helper.register_mouse_down((pos) => {
             floatSourcePanel.mouse_down_event(pos);
             floatActionbar.mouse_down_event(pos);
@@ -37,6 +37,25 @@ export const RenderPreviewPage = function() {
         };
     }, []);
 
+    const get_block = function(block_id: string) {
+        let notePage = get_note_by_id(focus_note_id);
+        let block_index = notePage?.blocks.findIndex(x=>x.id == block_id);
+        if (notePage == null || block_index == undefined || block_index < 0) return;
+
+        return notePage.blocks[block_index];
+    }
+    
+    const change_block_value = function(block_id: string, operation: (block: NoteBlockType) => NoteBlockType) {
+        let notePage = get_note_by_id(focus_note_id);
+        let block_index = notePage?.blocks.findIndex(x=>x.id == block_id);
+        
+        if (notePage == null || block_index == undefined || block_index < 0) return;
+        
+        notePage.blocks[block_index] = operation(notePage.blocks[block_index]);
+        note_dict.set(notePage);
+    }
+
+//#region UI Event
     const on_slate_title_change = function(id: string, value: any[]) {
 
         let paragraph : NoteRowType[] = 
@@ -47,24 +66,38 @@ export const RenderPreviewPage = function() {
             }
         });
         
-        change_block_value(id, paragraph);
+        change_block_value(id, (block: NoteBlockType) => {
+            block.row = paragraph;
+            return block;
+        });
     }
 
     const on_action_bar_click = function(id: string) {
-        console.log("on_action_bar_click " + id)
-        floatActionbar.show(true);
-        floatActionbar.set_position(MouseHelper.x, MouseHelper.y);
+        ShowFloatingBoard(floatActionbar);
+        let block = get_block(id);
+
+        if (block == null) return;
+
+        floatActionbar.setCallback(id, on_action_bar_state_click);
+        floatSourcePanel.setCallback(id, (block.source == null) ? "" : block.source, on_source_link_set);
     }
 
-    const change_block_value = function(block_id: string, rows: NoteRowType[]) {
-        let noteFullBlock = get_note_by_id(focus_note_id);
-        let block_index = noteFullBlock?.blocks.findIndex(x=>x.id == block_id);
-
-        if (noteFullBlock == null || block_index == undefined || block_index < 0) return;
-
-        noteFullBlock.blocks[block_index].row = rows;
-        note_dict.set(noteFullBlock);
+    const on_action_bar_state_click = function(block_id:string, state: FloatActionBarState) {
+        if (state == FloatActionBarState.AI_Source) {
+            ShowFloatingBoard(floatSourcePanel);
+            floatActionbar.show(false);
+        }
     }
+
+    const on_source_link_set = function(id: string, link: string) {
+        console.log("From link " + link);
+
+        change_block_value(id, (block: NoteBlockType) => {
+            block.source = link;
+            return block;
+        });
+    }
+//#endregion
 
     const render_slate_contents = function() {
         let noteFullBlock = get_note_by_id(focus_note_id);
@@ -110,8 +143,6 @@ export const RenderPreviewPage = function() {
     }
 
     const add_block = function() {
-        // floatSourcePanel.show(true);
-        // floatSourcePanel.set_position(MouseHelper.x, MouseHelper.y);
         add_new_row();
     }
 
@@ -131,6 +162,11 @@ export const RenderPreviewPage = function() {
             { render_slate_contents() }
         </div>
     );
+}
+
+const ShowFloatingBoard = function(floating: AbstractMovable) {
+    floating.show(true);
+    floating.set_position(MouseHelper.x, MouseHelper.y);
 }
 
 const UpdateNotionBlock = function(node_id: string, descendents: Descendant[]) {

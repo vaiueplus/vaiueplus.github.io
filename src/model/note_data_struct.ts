@@ -33,6 +33,7 @@ export type NotePageType = {
 export type NoteBlockType = {
     id: string,
     row : NoteRowType[],
+    source?: string,
 }
 
 export type NoteSource = {
