@@ -12,12 +12,14 @@ import { MouseHelper } from "@/app/ui/mouse_helper";
 import {v4 as uuidv4} from 'uuid';
 import { FloatActionBarState } from "@/data_structure";
 import { AbstractMovable } from "@/app/ui/movable_view";
+import { useAccountStore } from "@/model/account_zustand";
 
 export const RenderPreviewPage = function() {
     let floatActionbar = new RenderSideActionBar()
     let floatSourcePanel = new RenderSourcePanel()
     const focus_note_id = useNoteFocusStore((state) => state.note_id);
     const note_dict = useNoteDictStore();
+    const accountStructStore = useAccountStore((state) => state.user);
 
     const get_note_by_id= useNoteDictStore((state) => state.get);
     const set_note_dict = useNoteDictStore((state) => state.set);
@@ -39,7 +41,7 @@ export const RenderPreviewPage = function() {
 
     const get_block = function(block_id: string) {
         let notePage = get_note_by_id(focus_note_id);
-        let block_index = notePage?.blocks.findIndex(x=>x.id == block_id);
+        let block_index = notePage?.blocks.findIndex(x=>x._id == block_id);
         if (notePage == null || block_index == undefined || block_index < 0) return;
 
         return notePage.blocks[block_index];
@@ -47,12 +49,14 @@ export const RenderPreviewPage = function() {
     
     const change_block_value = function(block_id: string, operation: (block: NoteBlockType) => NoteBlockType) {
         let notePage = get_note_by_id(focus_note_id);
-        let block_index = notePage?.blocks.findIndex(x=>x.id == block_id);
+        let block_index = notePage?.blocks.findIndex(x=>x._id == block_id);
         
         if (notePage == null || block_index == undefined || block_index < 0) return;
         
         notePage.blocks[block_index] = operation(notePage.blocks[block_index]);
         note_dict.set(notePage);
+
+        UpdateNotionBlock(accountStructStore.sub, notePage);
     }
 
 //#region UI Event
@@ -109,8 +113,8 @@ export const RenderPreviewPage = function() {
             <div>
                 <h2>{noteFullBlock.title}</h2>
 
-                <div key={noteFullBlock.blocks[0].id} className="note-block-comp">
-                    <RenderSlateContent index={0} id={noteFullBlock.blocks[0].id} default_data={noteFullBlock.blocks[0].row}
+                <div key={noteFullBlock.blocks[0]._id} className="note-block-comp">
+                    <RenderSlateContent index={0} id={noteFullBlock.blocks[0]._id} default_data={noteFullBlock.blocks[0].row}
                     readOnly={false} placeholder_text="Topic . . ."
                     finish_edit_event={on_slate_title_change} action_bar_event={(id) => {}}></RenderSlateContent>
                 </div>
@@ -121,8 +125,8 @@ export const RenderPreviewPage = function() {
                         if (index == 0) return array;
 
                         array.push(
-                            <div key={x.id} className="note-block-comp">
-                                <RenderSlateContent id={x.id} default_data={x.row} index={index}
+                            <div key={x._id} className="note-block-comp">
+                                <RenderSlateContent id={x._id} default_data={x.row} index={index}
                                 readOnly={false} 
                                 finish_edit_event={on_slate_title_change} 
                                 action_bar_event={on_action_bar_click}
@@ -151,7 +155,7 @@ export const RenderPreviewPage = function() {
         if (noteFullBlock == null) return;
 
         let new_block = GetEmptyNoteBlock();
-        new_block.id = uuidv4();
+        new_block._id = uuidv4();
         noteFullBlock.blocks.push(new_block);
 
         note_dict.set(noteFullBlock);
@@ -169,11 +173,8 @@ const ShowFloatingBoard = function(floating: AbstractMovable) {
     floating.set_position(MouseHelper.x, MouseHelper.y);
 }
 
-const UpdateNotionBlock = function(node_id: string, descendents: Descendant[]) {
-    let blocks = SlateToBlock(descendents);
+const UpdateNotionBlock = function(user_id: string, note_page: NotePageType) {
     let url = Combine_API(API.PostNoteBlock);
-
-    console.log(blocks);
 
     fetch(url, {
         method: "POST",
@@ -181,8 +182,8 @@ const UpdateNotionBlock = function(node_id: string, descendents: Descendant[]) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            id: node_id,
-            data: blocks
+            user_id: user_id,
+            note_page: note_page
         })
     });
 }

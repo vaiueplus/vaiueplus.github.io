@@ -27,13 +27,13 @@ const NoteHeaderComp = function(props:any) {
 
     function create_new_note() {
         let new_block : NotePageType = GetEmptyNotePage();
-            new_block.id = uuidv4();
+            new_block._id = uuidv4();
             new_block.title = "Note #" + (notes.count() + 1);
             new_block.date = new Date().toDateString();
-            new_block.blocks[0].id = uuidv4();
+            new_block.blocks[0]._id = uuidv4();
 
         set_note_dict(new_block);
-        note_focus_set(new_block.id);
+        note_focus_set(new_block._id);
     }
     
     return (
@@ -80,10 +80,10 @@ const NoteBodyComp = function(props:any) {
                 if (note_block == undefined) return;
                 
                 let note_item_class = "note-item-comp"
-                if (note_focus_id == note_block.id) note_item_class += " active"; 
+                if (note_focus_id == note_block._id) note_item_class += " active"; 
                 return (
-                    <div className={note_item_class} key={note_block.id} onClick={ () => {
-                        note_focus_set(note_block?.id)
+                    <div className={note_item_class} key={note_block._id} onClick={ () => {
+                        note_focus_set(note_block?._id)
                     } }>
                     
                     <section>

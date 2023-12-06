@@ -5,6 +5,7 @@ export const SUBJECT_LAW_LEARNING = "SUBJECT_LAW_LEARNING";
 
 export const CoockieTable = Object.freeze({
     Procedural_Language_Code : "procedural_language_code",
+    UserID : "user_id",
 });
 
 export const LocalStorageTable = Object.freeze({

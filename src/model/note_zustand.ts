@@ -38,8 +38,8 @@ export const useNoteDictStore = create<NotePageZusStore>( (set, get) => ({
             let cache_array = state.notes_array;
 
             for (let n of notes) {
-                cache_dict = cache_dict.set(n.id, n);
-                cache_array = cache_array.push(n.id);
+                cache_dict = cache_dict.set(n._id, n);
+                cache_array = cache_array.push(n._id);
             }
 
             return ({notes_dict: cache_dict, notes_array: cache_array}) 
@@ -49,12 +49,12 @@ export const useNoteDictStore = create<NotePageZusStore>( (set, get) => ({
     set(note: NotePageType) {
         set(state => {
 
-            if (state.notes_dict.has(note.id)) {
-                return ({ notes_dict: state.notes_dict.set(note.id, note) }) ;
+            if (state.notes_dict.has(note._id)) {
+                return ({ notes_dict: state.notes_dict.set(note._id, note) }) ;
             }   
             
 
-            return ({notes_dict: state.notes_dict.set(note.id, note), notes_array: state.notes_array.push(note.id) }) 
+            return ({notes_dict: state.notes_dict.set(note._id, note), notes_array: state.notes_array.push(note._id) }) 
         });
     },
 

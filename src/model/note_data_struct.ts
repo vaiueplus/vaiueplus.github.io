@@ -2,7 +2,7 @@ import {v4 as uuidv4} from 'uuid';
 
 export const GetEmptyNotePage = function() {
     let new_block : NotePageType = {
-        id: "",
+        _id: "",
         title: "",
         date: "",
         blocks: [GetEmptyNoteBlock()],//Only prepare header block
@@ -13,7 +13,7 @@ export const GetEmptyNotePage = function() {
 
 export const GetEmptyNoteBlock = function() {
     let new_block : NoteBlockType = {
-        id: "",
+        _id: "",
         row: [{type: "paragraph", children: [{text: ""}]}],//Only prepare header block
     }
     return new_block;
@@ -21,7 +21,7 @@ export const GetEmptyNoteBlock = function() {
 
 //First Layer
 export type NotePageType = {
-    id: string,
+    _id: string,
     title: string,
     date: string,
 
@@ -31,7 +31,7 @@ export type NotePageType = {
 
 //Second Layer
 export type NoteBlockType = {
-    id: string,
+    _id: string,
     row : NoteRowType[],
     source?: string,
 }
@@ -58,7 +58,7 @@ export type NoteParagraphType = {
 }
 
 export type NoteKeywordType = {
-    id: string,
+    _id: string,
     text: string,
 
     ref_paragraph: string,
